@@ -29,7 +29,8 @@ module.exports = function(Product) {
 	            source: 'req'
 	        }
 	    }],
-	    returns: {type: 'array', root: true}
+	    returns: {type: 'array', root: true},
+	    http: {verb: 'get'}
     });
 
 };

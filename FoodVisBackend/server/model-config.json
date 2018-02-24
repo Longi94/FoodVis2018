@@ -15,7 +15,7 @@
   },
   "productsCollection": {
     "dataSource": "productsMongoDB",
-    "public": true
+    "public": false
   },
   "Product": {
     "dataSource": null,
