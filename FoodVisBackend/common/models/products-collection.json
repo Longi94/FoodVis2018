@@ -1,0 +1,14 @@
+{
+  "name": "productsCollection",
+  "plural": "productsCollection",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

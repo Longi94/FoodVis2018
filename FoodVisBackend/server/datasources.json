@@ -1,0 +1,9 @@
+{
+  "productsMongoDB": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "foodVis_test",
+    "name": "productsMongoDB",
+    "connector": "mongodb"
+  }
+}
