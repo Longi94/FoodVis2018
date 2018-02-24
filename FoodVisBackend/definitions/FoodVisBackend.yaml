@@ -359,6 +359,20 @@ paths:
                 type: number
                 format: double
       deprecated: false
+  /Products/search:
+    post:
+      tags:
+        - Product
+      operationId: Product.search
+      parameters: []
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/x-any'
+      deprecated: false
 definitions:
   productsCollection:
     properties:
