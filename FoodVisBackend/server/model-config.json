@@ -24,5 +24,9 @@
   "Ingredient": {
     "dataSource": null,
     "public": true
+  },
+  "GeoStats": {
+    "dataSource": null,
+    "public": true
   }
 }

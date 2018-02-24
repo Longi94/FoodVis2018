@@ -27,6 +27,20 @@ paths:
             items:
               $ref: '#/definitions/x-any'
       deprecated: false
+  /GeoStats/search:
+    get:
+      tags:
+        - GeoStats
+      operationId: GeoStats.search
+      parameters: []
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/x-any'
+      deprecated: false
 definitions:
   x-any:
     properties: {}
