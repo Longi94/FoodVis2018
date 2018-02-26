@@ -8,6 +8,11 @@
     background-color: rgba(0,0,0,0.2);
 }
 
+#sankey svg {
+    width: 100%;
+    height: 100%;
+}
+
 #map {
     background-color: #00244c;
     width: 50%;
