@@ -1,20 +1,7 @@
-graph = {
-  "nodes": [
-    {"id": "Alice"},
-    {"id": "Bob"},
-    {"id": "Carol"}
-  ],
-  "links": [
-    {"source": 0, "target": 1}, // Alice → Bob
-    {"source": 1, "target": 2} // Bob → Carol
-  ]
-};
-
-
 var svg = d3.select("body").select(".container").select("#sankey").append("svg");
 
-var formatNumber = d3.format(",.0f"),
-    format = function(d) { return formatNumber(d) + " TWh"; },
+var formatNumber = d3.format(".2f"),
+    format = function(d) { return formatNumber(d)},
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var sankey = d3.sankey()
@@ -35,7 +22,7 @@ var node = svg.append("g")
     .attr("font-size", 10)
   .selectAll("g");
 
-d3.json("./js/sankey.json", function(error, energy) {
+d3.json("./json/sankey.json", function(error, energy) {
   if (error) throw error;
 
   sankey(energy);

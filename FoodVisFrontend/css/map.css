@@ -13,6 +13,10 @@
     height: 100%;
 }
 
+#sankey svg path:hover {
+  stroke-opacity: .5;
+}
+
 #map {
     background-color: #00244c;
     width: 50%;

@@ -1,0 +1,4 @@
+{
+	"nodes": [{"name": "fiber_100g"}, {"name": "salt_100g"}, {"name": "alcohol_100g"}, {"name":"proteins_100g"}, {"name":"sodium_100g"}, {"name":"Tic Tac Mint"}, {"name":"Coca Cola"}, {"name": "sugar_100g"}],
+	"links": [{"source": 1, "target": 5, "value": 0.03}, {"source": 3, "target": 5, "value": 0.1}, {"source": 4, "target": 5, "value": 0.0118110236220472}, {"source":7, "target": 6, "value": 0.08}, {"source": 4, "target": 6, "value": 0.1}]
+}
