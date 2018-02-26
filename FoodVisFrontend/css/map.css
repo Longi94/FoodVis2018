@@ -1,6 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+#sankey {
+    width: 50%;
+    background-color: rgba(0,0,0,0.2);
+}
 
 #map {
     background-color: #00244c;
+    width: 50%;
 }
 
 #map .countries {
