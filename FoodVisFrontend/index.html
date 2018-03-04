@@ -9,30 +9,33 @@
         crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
-    <link rel="stylesheet" href="css/map.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
 <body>
-<div class="container">
-    <div class="relevant">
+    <div class="container">
+        <div class="relevant">
 
-    </div>
-    
-    <div class="graphs">
-        <div class="donut" id="donut1">
         </div>
-        <div class="donut" id="donut2">
+        <div class="graphs">
+            <div id="norm-bar">
+                <svg width="960" height="500"></svg>
+            </div>
+            <!--<div class="donut" id="donut1">
+            </div>
+            <div class="donut" id="donut2">
+            </div>
+            <div class="donut" id="donut3">
+            </div>
+            <div class="donut" id="donut4">
+            </div>-->
         </div>
-        <div class="donut" id="donut3">
-        </div>
-        <div class="donut" id="donut4">
-        </div>
-    </div>
 
-    <div class="filters">
+        <div class="filters">
 
+        </div>
     </div>
-</div>
-<script src="./js/donut.js"></script>
-<script src="js/index.js"></script>
+    <script src="./js/donut.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/norm-bar.js"></script>
 </body>
 </html>

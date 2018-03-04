@@ -29,8 +29,13 @@ text {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    width: 60%;
+    width: 70%;
     overflow: hidden;
+}
+
+.container .graphs .norm-bar {
+    max-width: 100%;
+    width: 100%;
 }
 
 .container .graphs .donut {
@@ -40,13 +45,13 @@ text {
 .relevant {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 15%;
     background-color: rgba(0,0,0,0.5);
     height: 100vh;
 }
 
 .filters {
-    width: 20%;
+    width: 15%;
     background-color: rgba(0,0,0,0.5);
     height: 100vh;
 }
