@@ -5,11 +5,11 @@ body {
     margin: 0;
 }
 
-path {
+.donut path {
     fill: orange;
     stroke: white;
 }
-text {
+.donut text {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
