@@ -1,0 +1,30 @@
+div.bar-tooltip {
+    display:flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    width: 200px;
+    height: 44px;
+    line-height: 22px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: black;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+div.bar-tooltip:before {
+    content:"";
+    position: absolute;
+    top: 100%;
+    left: 90px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-top: 12px solid black;
+    border-right: 12px solid transparent;
+}

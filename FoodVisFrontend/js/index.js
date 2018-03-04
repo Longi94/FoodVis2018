@@ -41,7 +41,7 @@ function search() {
         "http://localhost:3000/api/Products/search",
         {category: query, limit: 50},
         function (result) {
-            console.log(result);
+            setBarChartData(result);
         }
     );
 }
