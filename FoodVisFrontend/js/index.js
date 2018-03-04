@@ -17,13 +17,19 @@ for(var j = 1; j < 5; j++){
                   .render();
 }
 
-$.get('json/categories.json', function (categories) {
-    $("#search-input").autocomplete({
+$.ajax({
+    dataType: "json",
+    url: 'json/categories.json',
+    mimeType: "application/json",
+    success: function(categories){
+      $("#search-input").autocomplete({
         source: categories,
         minLength: 3
-    })
-}).fail(function (xhr, error) {
-    console.log(error)
+      });
+    },
+    error: function(error) {
+      console.error(error);
+    }
 });
 
 function search() {
