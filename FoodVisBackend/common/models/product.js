@@ -36,6 +36,12 @@ module.exports = function(Product) {
 			queryObj = Object.assign({}, queryObj, ingObj);
 		}
 
+		// ---- ORDER ----
+
+		var order;
+		if(reqQueryObj.order) {
+			order = reqQueryObj.order;
+		}
 
 		// ---- OPTIONS ----
 
@@ -54,7 +60,8 @@ module.exports = function(Product) {
 		var filterObj = {
 			where: queryObj,
 			limit: limit,
-			skip: skip
+			skip: skip,
+			order: order
 		};
 
 
