@@ -17,8 +17,11 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/11.0.3/nouislider.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/11.0.3/nouislider.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/styles.css">
     <link rel="stylesheet" type="text/css" href="./css/norm-bar.css">
+    <link rel="stylesheet" type="text/css" href="./css/noUi.css">
 </head>
 <body>
 <div>
@@ -44,7 +47,11 @@
         </div>
 
         <div class="filters">
+            <div class="slider" id="fat_100g"></div> </br></br>
+            <div class="slider" id="sugars_100g"></div> </br></br>
+            <div class="slider noUi-active" id="proteins_100g"></div> </br></br></br></br></br></br>
 
+            <button id="filter-button" onclick="getFilterValues()">check console</button>
         </div>
     </div>
     <script src="./js/donut.js"></script>

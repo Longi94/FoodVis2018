@@ -45,3 +45,31 @@ function search() {
         }
     );
 }
+
+function getFilterValues() {
+  let ingredients = {};
+  $(".slider").each(function(){
+    let range = {"gt": $(this)[0].noUiSlider.get()[0], "lt": $(this)[0].noUiSlider.get()[1]};
+    ingredients[$(this).attr('id')] = range;
+  });
+  console.log(ingredients);
+  return ingredients;
+}
+
+function initSliders() {
+  $(".slider").each(function(){
+    var slider = $(this)[0];
+
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      step: 1,
+      tooltips: true,
+      range: {
+        'min': 0,
+        'max': 100
+      }
+    });
+  });
+}
+initSliders();
