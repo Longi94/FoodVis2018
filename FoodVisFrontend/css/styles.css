@@ -5,16 +5,30 @@ body {
     margin: 0;
 }
 
-.donut path {
-    fill: orange;
+#arc-0 path {
+    fill: rgb(242, 101, 32);
     stroke: white;
 }
+
+#arc-1 path {
+    fill: rgb(71,172,177);
+    stroke: white;
+}
+
+#data-1 {
+    fill: red;
+}
+
 .donut text {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
   fill: black;
   text-anchor: middle;
+}
+
+.arc text {
+    fill: white;
 }
 
 .container {
@@ -36,10 +50,6 @@ body {
 .container .graphs .norm-bar {
     max-width: 100%;
     width: 100%;
-}
-
-.container .graphs .donut {
-    width: 20%;
 }
 
 .relevant {

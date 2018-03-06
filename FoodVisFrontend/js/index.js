@@ -1,12 +1,13 @@
-for(var j = 1; j < 5; j++){
+for(var j = 0; j < 4; j++){
     var getData = function(){
-      var size = 3;
+      var size = 2;
       var data = {};
       var text = "";
-      for(var i=0; i<size; i++){
-        data["data-"+(i+1)] = Math.round(Math.random() * 100);
-        text += "data-"+ (i+1) +" = " + data["data-"+(i+1)] + "<br/>";
-      };
+      data["data-1"] = Math.round(Math.random()*100);
+      data["data-2"] = 100 - data["data-1"]
+      text += "data-1 = "+data[1]+"<br/>";
+      text += "data-2 = "+data[2]+"<br/>";
+    
       d3.select("#data").html(text);
       return data;
     };
