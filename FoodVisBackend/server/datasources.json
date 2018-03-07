@@ -1,9 +1,9 @@
 {
   "productsMongoDB": {
-    "host": "localhost",
+    "url": "mongodb://infoviz:dundul2010@cluster0-shard-00-00-gc1cg.mongodb.net:27017,cluster0-shard-00-01-gc1cg.mongodb.net:27017,cluster0-shard-00-02-gc1cg.mongodb.net:27017/viz?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin",
     "port": 27017,
-    "database": "foodVis_test",
-    "name": "productsMongoDB",
+    "database": "viz",
+    "name": "products",
     "connector": "mongodb"
   }
 }
