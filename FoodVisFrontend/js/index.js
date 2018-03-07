@@ -40,7 +40,7 @@ function search() {
 
     $.get(
         "http://localhost:3000/api/Products/search",
-        {category: query, limit: 50},
+        {category: query, limit: 50, ingredients: JSON.stringify(getFilterValues())},
         function (result) {
             setBarChartData(result);
         }
@@ -48,12 +48,19 @@ function search() {
 }
 
 function getFilterValues() {
-  let ingredients = {};
+  let ingredients = {and: []};
   $(".slider").each(function(){
-    let range = {"gt": $(this)[0].noUiSlider.get()[0], "lt": $(this)[0].noUiSlider.get()[1]};
-    ingredients[$(this).attr('id')] = range;
+    // {$and: [{fat_100g: {$gt: 0}}, {fat_100g: {$lt: 100}}]}
+    let rangeGt = {"gt": parseInt($(this)[0].noUiSlider.get()[0])};
+    let rangeLt = {"lt": parseInt($(this)[0].noUiSlider.get()[1])};
+    
+    let asd1 = {};
+    let asd2 = {};
+    asd1[$(this).attr('id')] = rangeGt;
+    asd2[$(this).attr('id')] = rangeLt;
+
+    ingredients['and'].push(asd1, asd2);
   });
-  console.log(ingredients);
   return ingredients;
 }
 
