@@ -24,8 +24,8 @@
     <link rel="stylesheet" type="text/css" href="./css/noUi.css">
 </head>
 <body>
-<div>
-    <input id="search-input" type="text"/>
+<div class="toolbar">
+    <input id="search-input" type="text" placeholder="Search for categories" />
     <button id="search-button" onclick="search()">Search</button>
 </div>
     <div class="container">
@@ -36,13 +36,13 @@
             <div id="norm-bar">
                 <svg width="800" height="500"></svg>
             </div>
-            <!--<div class="donut" id="donut1">
+           <!--<div class="donut" id="donut0">
+            </div>
+            <div class="donut" id="donut1">
             </div>
             <div class="donut" id="donut2">
             </div>
             <div class="donut" id="donut3">
-            </div>
-            <div class="donut" id="donut4">
             </div>-->
         </div>
 
@@ -51,7 +51,7 @@
             <div class="slider" id="sugars_100g"></div> </br></br>
             <div class="slider noUi-active" id="proteins_100g"></div> </br></br></br></br></br></br>
 
-            <button id="filter-button" onclick="getFilterValues()">check console</button>
+            <button id="filter-button" class="styled" onclick="getFilterValues()">check console</button>
         </div>
     </div>
     <script src="./js/donut.js"></script>

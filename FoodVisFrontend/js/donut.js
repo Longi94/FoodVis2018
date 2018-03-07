@@ -3,8 +3,8 @@ function donut(){
   var $el = d3.select("body")
   var data = {};
   // var showTitle = true;
-  var width = 960,
-      height = 400,
+  var width = 300,
+      height = 300,
       radius = Math.min(width, height) / 2;
 
   var currentVal;
@@ -68,6 +68,8 @@ function donut(){
       g.on("mouseout", function(obj){
         svg.select("text.text-tooltip").text("");
       });
+
+      svg.selectAll("g").attr("id", function(d, i){ return "arc-"+i});
 
     }else{
       g.data(pie(d3.entries(data))).exit().remove();
