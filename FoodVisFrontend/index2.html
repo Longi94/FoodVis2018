@@ -7,57 +7,89 @@
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/index2.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
 
 </head>
 <body>
-<div class="jumbotron jumbotron-fluid" style="height:100vh">
-  <div class="container-fluid">
-  	<div class="text-center">
-	  	<div class="form-group">
-	  	  <h1 class="display-4">Category</h1>
-		  <input type="text" class="form-control" id="search-bar" placeholder="Search for a category...">
+	<div class="row column-container">
+		<div class="column">
+			<h3>Search categories</h3>
+			<div class="row">
+    			<input id="search-input" type="text" placeholder="Search for categories" />
+    			<button id="search-button" onclick="search()">Search</button>
+			</div>
 		</div>
-	<div class="container">
-		 <div class="row">
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="images/beers.jpg">
-		        <img src="images/beers.jpg"  style="width:100%">
-		        <div class="caption">
-		          <p>BEER</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="images/breakfast.jpg">
-		        <img src="images/breakfast.jpg"  style="width:100%">
-		        <div class="caption">
-		          <p>BREAKFAST</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
-		  <div class="col-md-4">
-		    <div class="thumbnail">
-		      <a href="images/sweets.jpg">
-		        <img src="images/sweets.jpg"  style="width:100%">
-		        <div class="caption">
-		          <p>SWEETS</p>
-		        </div>
-		      </a>
-		    </div>
-		  </div>
+		<div class="column suggestions">
+			<h3>Category suggestions</h3>
+			<div class="row wrap">
+				<div class="item">
+					<div class="image beer">
+						<div class="overlay"></div>
+						<h3>Beer</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image breakfast">
+						<div class="overlay"></div>
+						<h3>Breakfast</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image sweets">
+						<div class="overlay"></div>
+						<h3>Sweets</h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="row wrap">
+				<div class="item">
+					<div class="image beer">
+						<div class="overlay"></div>
+						<h3>Beer</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image breakfast">
+						<div class="overlay"></div>
+						<h3>Breakfast</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image sweets">
+						<div class="overlay"></div>
+						<h3>Sweets</h3>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row wrap">
+				<div class="item">
+					<div class="image beer">
+						<div class="overlay"></div>
+						<h3>Beer</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image breakfast">
+						<div class="overlay"></div>
+						<h3>Breakfast</h3>
+					</div>
+				</div>
+				<div class="item">
+					<div class="image sweets">
+						<div class="overlay"></div>
+						<h3>Sweets</h3>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-  	</div>
-  </div>
-</div>
+    <script src="js/index.js"></script>
+	<script src="js/norm-bar.js"></script>
 </body>
 </html>
