@@ -18,9 +18,15 @@ function search() {
 
     query = query.split(" ").join("-");
 
+    let body = {category: query, limit: 50};
+    let filterValues = getFilterValues();
+    if (filterValues) {
+        body['ingredients'] = JSON.stringify(filterValues);
+    }
+
     $.get(
         "http://localhost:3000/api/Products/search",
-        {category: query, limit: 50, ingredients: JSON.stringify(getFilterValues())},
+        body,
         function (result) {
             setBarChartData(result);
         }
@@ -35,8 +41,16 @@ function getFilterValues() {
   let ingredients = {and: []};
   $(".slider").each(function(){
     // {$and: [{fat_100g: {$gt: 0}}, {fat_100g: {$lt: 100}}]}
-    let rangeGt = {"gt": parseInt($(this)[0].noUiSlider.get()[0])};
-    let rangeLt = {"lt": parseInt($(this)[0].noUiSlider.get()[1])};
+    let slider = $(this)[0].noUiSlider;
+    let min = parseInt(slider.get()[0]);
+    let max = parseInt(slider.get()[1]);
+    if (min === slider.options.range.min &&
+        max === slider.options.range.max) {
+        return;
+    }
+
+    let rangeGt = {"gt": min};
+    let rangeLt = {"lt": max};
     
     let asd1 = {};
     let asd2 = {};
@@ -45,5 +59,5 @@ function getFilterValues() {
 
     ingredients['and'].push(asd1, asd2);
   });
-  return ingredients;
+  return ingredients['and'].length > 0 ? ingredients : null;
 }
