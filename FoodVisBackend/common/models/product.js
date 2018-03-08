@@ -71,6 +71,7 @@ module.exports = function(Product) {
 		    if (err) {
 		        return console.log(err);
 		    } else {
+				console.log(data);
 		    	callback(null, data);
 		    }
 		});
