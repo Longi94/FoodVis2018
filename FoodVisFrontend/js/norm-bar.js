@@ -62,150 +62,152 @@ const selectedIngredients = [
     "id"
 ];
 
-var barTooltip = d3.select("body").append("div")
-    .attr("class", "bar-tooltip")
-    .style("opacity", "0");
+(function(window) {
+    var barTooltip = d3.select("body").append("div")
+        .attr("class", "bar-tooltip")
+        .style("opacity", "0");
 
 
-var currentMousePos = {x: -1, y: -1};
-$(document).mousemove(function (event) {
-    currentMousePos.x = event.pageX;
-    currentMousePos.y = event.pageY;
-    barTooltip
-        .style("left", currentMousePos.x - 100 + "px")
-        .style("top", currentMousePos.y - 65 + "px");
-});
+    var currentMousePos = {x: -1, y: -1};
+    $(document).mousemove(function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+        barTooltip
+            .style("left", currentMousePos.x - 100 + "px")
+            .style("top", currentMousePos.y - 65 + "px");
+    });
 
-var svg = d3.select("#norm-bar > svg"),
-    margin = {top: 20, right: 60, bottom: 30, left: 40},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select("#norm-bar > svg"),
+        margin = {top: 20, right: 60, bottom: 30, left: 40},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x = d3.scaleBand()
-    .rangeRound([0, width])
-    .padding(0.1)
-    .align(0.1);
+    var x = d3.scaleBand()
+        .rangeRound([0, width])
+        .padding(0.1)
+        .align(0.1);
 
-var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
+    var y = d3.scaleLinear()
+        .rangeRound([height, 0]);
 
-var z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    var z = d3.scaleOrdinal()
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-var stack = d3.stack()
-    .offset(d3.stackOffsetExpand);
+    var stack = d3.stack()
+        .offset(d3.stackOffsetExpand);
 
-function setBarChartData(products) {
-    if (products.length === 0) {
-        return;
-    }
-    Object.keys(products[0]).forEach(function (key) {
-        var removeKey = true;
+    window.setBarChartData = function(products) {
+        if (products.length === 0) {
+            return;
+        }
+        Object.keys(products[0]).forEach(function (key) {
+            var removeKey = true;
 
-        if ($.inArray(key, selectedIngredients) !== -1) {
-            for (var i = 0; i < products.length; i++) {
-                if (products[i][key] !== "") {
-                    removeKey = false;
-                    break;
+            if ($.inArray(key, selectedIngredients) !== -1) {
+                for (var i = 0; i < products.length; i++) {
+                    if (products[i][key] !== "") {
+                        removeKey = false;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (removeKey) {
-            products.forEach(function (product) {
-                delete product[key];
-            });
-        }
-    });
-
-    products.forEach(function (product) {
-        Object.keys(product).forEach(function (key) {
-            if (typeof product[key] !== "number" && key !== "id" && key !== "product_name") {
-                product[key] = 0
+            if (removeKey) {
+                products.forEach(function (product) {
+                    delete product[key];
+                });
             }
         });
-    });
 
-    /*const sortKey = Object.keys(products[0])[0];
-
-    products.sort(function (a, b) {
-        return a[sortKey] - b[sortKey]
-    });*/
-
-    var keys = Object.keys(products[0]).filter(function (k) {
-        return k !== "id" && k !== "product_name"
-    });
-
-    x.domain(products.map(function (d) {
-        return d.id
-    }));
-    z.domain(keys);
-
-    g.html("");
-
-    var serie = g.selectAll(".serie")
-        .data(stack.keys(keys)(products))
-        .enter().append("g")
-        .attr("class", "serie")
-        .attr("fill", function (d) {
-            return z(d.key);
-        });
-
-    serie.selectAll("rect")
-        .data(function (d) {
-            d.forEach(function (value) {
-                value.key = d.key;
+        products.forEach(function (product) {
+            Object.keys(product).forEach(function (key) {
+                if (typeof product[key] !== "number" && key !== "id" && key !== "product_name") {
+                    product[key] = 0
+                }
             });
-            return d;
-        })
-        .enter().append("rect")
-        .attr("x", function (d) {
-            return x(d.data.id);
-        })
-        .attr("y", function (d) {
-            return y(d[1]);
-        })
-        .attr("height", function (d) {
-            return y(d[0]) - y(d[1]);
-        })
-        .attr("width", x.bandwidth())
-        .on("mouseover", function (d) {
-            barTooltip.style("opacity", .75);
-            barTooltip.html("<span>" + d.data.product_name + "</span>" + "<span>" + d.key + " - " + d.data[d.key] + "</span>");
-        })
-        .on("mouseout", function (d) {
-            barTooltip.style("opacity", 0);
         });
 
-    g.append("g")
-        .attr("class", "axis axis--y")
-        .call(d3.axisLeft(y).ticks(10, "%"));
+        /*const sortKey = Object.keys(products[0])[0];
 
-    var legend = serie.append("g")
-        .attr("class", "legend")
-        .attr("transform", function (d) {
-            var d = d[d.length - 1];
-            return "translate(" + (x(d.data.id) + x.bandwidth()) + "," + ((y(d[0]) + y(d[1])) / 2) + ")";
+        products.sort(function (a, b) {
+            return a[sortKey] - b[sortKey]
+        });*/
+
+        var keys = Object.keys(products[0]).filter(function (k) {
+            return k !== "id" && k !== "product_name"
         });
 
-    legend.append("line")
-        .attr("x1", -6)
-        .attr("x2", 6)
-        .attr("stroke", "#000");
+        x.domain(products.map(function (d) {
+            return d.id
+        }));
+        z.domain(keys);
 
-    legend.append("text")
-        .attr("x", 9)
-        .attr("dy", "0.35em")
-        .attr("fill", "#000")
-        .style("font", "10px sans-serif")
-        .text(function (d) {
-            return d.key;
-        });
-}
+        g.html("");
 
-function type(d, i, columns) {
-    for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-    d.total = t;
-    return d;
-}
+        var serie = g.selectAll(".serie")
+            .data(stack.keys(keys)(products))
+            .enter().append("g")
+            .attr("class", "serie")
+            .attr("fill", function (d) {
+                return z(d.key);
+            });
+
+        serie.selectAll("rect")
+            .data(function (d) {
+                d.forEach(function (value) {
+                    value.key = d.key;
+                });
+                return d;
+            })
+            .enter().append("rect")
+            .attr("x", function (d) {
+                return x(d.data.id);
+            })
+            .attr("y", function (d) {
+                return y(d[1]);
+            })
+            .attr("height", function (d) {
+                return y(d[0]) - y(d[1]);
+            })
+            .attr("width", x.bandwidth())
+            .on("mouseover", function (d) {
+                barTooltip.style("opacity", .75);
+                barTooltip.html("<span>" + d.data.product_name + "</span>" + "<span>" + d.key + " - " + d.data[d.key] + "</span>");
+            })
+            .on("mouseout", function (d) {
+                barTooltip.style("opacity", 0);
+            });
+
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(10, "%"));
+
+        var legend = serie.append("g")
+            .attr("class", "legend")
+            .attr("transform", function (d) {
+                var d = d[d.length - 1];
+                return "translate(" + (x(d.data.id) + x.bandwidth()) + "," + ((y(d[0]) + y(d[1])) / 2) + ")";
+            });
+
+        legend.append("line")
+            .attr("x1", -6)
+            .attr("x2", 6)
+            .attr("stroke", "#000");
+
+        legend.append("text")
+            .attr("x", 9)
+            .attr("dy", "0.35em")
+            .attr("fill", "#000")
+            .style("font", "10px sans-serif")
+            .text(function (d) {
+                return d.key;
+            });
+    }
+
+    function type(d, i, columns) {
+        for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
+        d.total = t;
+        return d;
+    }
+})(window);
