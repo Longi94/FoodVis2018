@@ -47,10 +47,18 @@
         </div>
 
         <div class="filters">
-            <div class="slider" id="fat_100g"></div> </br></br>
-            <div class="slider" id="sugars_100g"></div> </br></br>
-            <div class="slider noUi-active" id="proteins_100g"></div> </br></br></br></br></br></br>
+            <p style="background: white">fat</p>
+            <div class="slider" id="fat_100g"></div>
+            <p style="background: white">sugars</p>
+            <div class="slider" id="sugars_100g"></div>
+            <p style="background: white">proteins</p>
+            <div class="slider noUi-active" id="proteins_100g"></div>
+            <p style="background: white">calcium</p>
+            <div class="slider noUi-active" id="calcium_100g"></div>
+            <p style="background: white">energy</p>
+            <div class="slider noUi-active" id="energy_100g"></div>
 
+            <button id="filter-reset" class="styled" onclick="resetFilterValues()">Reset</button>
         </div>
     </div>
     <script src="js/donut.js"></script>
