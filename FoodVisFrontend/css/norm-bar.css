@@ -15,6 +15,7 @@ div.bar-tooltip {
     border: 0;
     border-radius: 8px;
     pointer-events: none;
+    z-index: 100;
 }
 
 div.bar-tooltip:before {
