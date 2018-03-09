@@ -28,8 +28,8 @@ function search() {
         "http://localhost:3000/api/Products/search",
         body,
         function (result) {
-            setProductsBrowserData(result);
-            setBarChartData(result);
+            setProductsBrowserData($.extend(true, [], result));
+            setBarChartData($.extend(true, [], result));
         }
     );
 }
