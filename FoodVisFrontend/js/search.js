@@ -28,30 +28,25 @@ function search() {
         "http://localhost:3000/api/Products/search",
         body,
         function (result) {
-            //console.log(result);
+            setProductsBrowserData($.extend(true, [], result));
+            setBarChartData($.extend(true, [], result));
+
             let prodList = $.extend(true, {}, result);
-
-            setBarChartData(result);
-
-
-            
-            //console.log(test);
             let $productView = $("#product-list");
             $productView.html("");
             let i = 0;
-            //$productView.append('<div class="container">')
             for(let key in prodList){
 
                   //console.log(result[key])
                   let img = document.createElement("img");
-                  img.style.width="50%";
-                  img.style.height = "50%"
+                  img.style.width="150px";
+                  img.style.height = "150px"
                   if((i%3)===0){
                     if(!(i===0)){
                       $productView.append("</div>");
                     }
                     $productView.append('<div class="row" id="r'+i+'">');
-                    var $row = $("#r"+i);
+                    let $row = $("#r"+i);
                     $row.append('<div class="col-sm-3" id="c'+i+'">');
                     let $col = $("#c"+i);
                     if(prodList[key]["image_url"]){
