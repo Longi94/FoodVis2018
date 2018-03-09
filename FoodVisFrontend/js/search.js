@@ -46,7 +46,7 @@ function search() {
                       $productView.append("</div>");
                     }
                     $productView.append('<div class="row" id="r'+i+'">');
-                    let $row = $("#r"+i);
+                    var $row = $("#r"+i);
                     $row.append('<div class="col-sm-3" id="c'+i+'">');
                     let $col = $("#c"+i);
                     if(prodList[key]["image_url"]){
