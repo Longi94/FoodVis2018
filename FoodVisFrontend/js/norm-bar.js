@@ -127,21 +127,30 @@ window.setBarChartData = function (products) {
         });
     });
 
+    let keys = Object.keys(products[0]).filter(k => k !== "id" && k !== "product_name");
+
+    let filtered = products.filter(product => {
+        for (let i = 0; i < keys.length; i++) {
+            if (product[keys[i]] > 0) {
+                return true;
+            }
+        }
+        return false;
+    });
+
     /*const sortKey = Object.keys(products[0])[0];
 
     products.sort(function (a, b) {
         return a[sortKey] - b[sortKey]
     });*/
 
-    let keys = Object.keys(products[0]).filter(k => k !== "id" && k !== "product_name");
-
-    x.domain(products.map(d => d.id));
+    x.domain(filtered.map(d => d.id));
     z.domain(keys);
 
     g.html("");
 
     let serie = g.selectAll(".serie")
-        .data(stack.keys(keys)(products))
+        .data(stack.keys(keys)(filtered))
         .enter().append("g")
         .attr("class", "serie")
         .attr("fill", d => z(d.key));
