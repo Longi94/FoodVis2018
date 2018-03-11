@@ -29,8 +29,7 @@ function search() {
         body,
         function (result) {
             setProductsBrowserData($.extend(true, [], result));
-            setBarChartData($.extend(true, [], result));
-
+            setBarChartData(result);
             let prodList = $.extend(true, {}, result);
             let $productView = $("#product-list");
             $productView.html("");

@@ -1,66 +1,20 @@
 const selectedIngredients = [
-    /*"energy_100g",*/ //it's too large
     "fat_100g",
-    "cholesterol_100g",
     "carbohydrates_100g",
     "sugars_100g",
-    "starch_100g",
-    "polyols_100g",
     "fiber_100g",
     "proteins_100g",
-    "casein_100g",
-    "serum-proteins_100g",
-    "nucleotides_100g",
-    "salt_100g",
-    "sodium_100g",
-    "alcohol_100g",
-    "vitamin-a_100g",
-    "beta-carotene_100g",
-    "vitamin-d_100g",
-    "vitamin-e_100g",
-    "vitamin-k_100g",
-    "vitamin-c_100g",
-    "vitamin-b1_100g",
-    "vitamin-b2_100g",
-    "vitamin-pp_100g",
-    "vitamin-b6_100g",
-    "vitamin-b9_100g",
-    "folates_100g",
-    "vitamin-b12_100g",
-    "biotin_100g",
-    "pantothenic-acid_100g",
-    "silica_100g",
-    "bicarbonate_100g",
-    "potassium_100g",
-    "chloride_100g",
-    "calcium_100g",
-    "phosphorus_100g",
-    "iron_100g",
-    "magnesium_100g",
-    "zinc_100g",
-    "copper_100g",
-    "manganese_100g",
-    "fluoride_100g",
-    "selenium_100g",
-    "chromium_100g",
-    "molybdenum_100g",
-    "iodine_100g",
-    "caffeine_100g",
-    "taurine_100g",
-    "ph_100g",
-    "fruits-vegetables-nuts_100g",
-    "cocoa_100g",
-    "chlorophyl_100g",
-    "carbon-footprint_100g",
-    "glycemic-index_100g",
-    "choline_100g",
-    "phylloquinone_100g",
-    "beta-glucan_100g",
-    "inositol_100g",
-    "carnitine_100g",
-    "product_name",
-    "id"
+    "salt_100g"
 ];
+
+const colors = {
+    fat_100g: "#ECD078",
+    carbohydrates_100g: "#D95B43",
+    sugars_100g: "#C02942",
+    fiber_100g: "#542437",
+    proteins_100g: "#53777A",
+    salt_100g: "#53777A",
+};
 
 let barTooltip = d3.select("body").append("div")
     .attr("class", "bar-tooltip")
@@ -90,9 +44,6 @@ let x = d3.scaleBand()
 let y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
-let z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
 let stack = d3.stack()
     .offset(d3.stackOffsetExpand);
 
@@ -100,60 +51,27 @@ function setBarChartData(products) {
     if (products.length === 0) {
         return;
     }
-    Object.keys(products[0]).forEach(key => {
-        let removeKey = true;
-
-        if ($.inArray(key, selectedIngredients) !== -1) {
-            for (let i = 0; i < products.length; i++) {
-                if (products[i][key] !== "") {
-                    removeKey = false;
-                    break;
-                }
-            }
-        }
-
-        if (removeKey) {
-            products.forEach(product => {
-                delete product[key];
-            });
-        }
-    });
-
-    products.forEach(product => {
-        Object.keys(product).forEach(key => {
-            if (typeof product[key] !== "number" && key !== "id" && key !== "product_name") {
-                product[key] = 0;
-            }
-        });
-    });
-
-    let keys = Object.keys(products[0]).filter(k => k !== "id" && k !== "product_name");
 
     let filtered = products.filter(product => {
-        for (let i = 0; i < keys.length; i++) {
-            if (product[keys[i]] > 0) {
+        for (let i = 0; i < selectedIngredients.length; i++) {
+            if (product[selectedIngredients[i]] > 0) {
                 return true;
             }
         }
         return false;
     });
 
-    /*const sortKey = Object.keys(products[0])[0];
-
-    products.sort(function (a, b) {
-        return a[sortKey] - b[sortKey]
-    });*/
+    filtered.sort((a, b) => a.fat_100g - b.fat_100g);
 
     x.domain(filtered.map(d => d.id));
-    z.domain(keys);
 
     g.html("");
 
     let serie = g.selectAll(".serie")
-        .data(stack.keys(keys)(filtered))
+        .data(stack.keys(selectedIngredients)(filtered))
         .enter().append("g")
         .attr("class", "serie")
-        .attr("fill", d => z(d.key));
+        .attr("fill", d => colors[d.key]);
 
     serie.selectAll("rect")
         .data(d => {
