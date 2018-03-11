@@ -96,7 +96,7 @@ let z = d3.scaleOrdinal()
 let stack = d3.stack()
     .offset(d3.stackOffsetExpand);
 
-window.setBarChartData = function (products) {
+function setBarChartData(products) {
     if (products.length === 0) {
         return;
     }
@@ -167,13 +167,14 @@ window.setBarChartData = function (products) {
         .attr("y", d => y(d[1]))
         .attr("height", d => y(d[0]) - y(d[1]))
         .attr("width", x.bandwidth())
-        .on("mouseover", function (d) {
+        .on("mouseover", d => {
             barTooltip.style("opacity", .75);
             barTooltip.html("<span>" + d.data.product_name + "</span>" + "<span>" + d.key + " - " + d.data[d.key] + "</span>");
         })
         .on("mouseout", () => {
             barTooltip.style("opacity", 0);
-        });
+        })
+        .on("click", d => console.log(d));
 
     g.append("g")
         .attr("class", "axis axis--y")
