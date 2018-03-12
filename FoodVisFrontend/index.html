@@ -31,40 +31,43 @@
 </div>
     <div class="container">
         <div class="relevant">
+            <p class="title">Relevant products</p>
             <div id="products-browser">
                 <div id="products-browser_list">
                 </div>
             </div>
         </div>
         
-        <div class="graphs">
+        <!--<div class="graphs">
             <div id="norm-bar">
                 <svg width="800" height="500"></svg>
             </div>
-           <!--<div class="donut" id="donut0">
+           <div class="donut" id="donut0">
             </div>
             <div class="donut" id="donut1">
             </div>
             <div class="donut" id="donut2">
             </div>
             <div class="donut" id="donut3">
-            </div>-->
+            </div>
+        </div>-->
+        <div id="middle" class="middle">
         </div>
-        <div><div id="product-list"></div></div>
         
 
 
 
         <div class="filters">
-            <p>fat</p>
-            <div class="slider" id="fat_100g"></div>
-            <p>sugars</p>
-            <div class="slider" id="sugars_100g"></div>
-            <p>proteins</p>
+            <p class="title">Filter options</p>
+            <p class="label">Fat</p>
+            <div class="slider noUi-active" id="fat_100g"></div>
+            <p class="label">Sugars</p>
+            <div class="slider noUi-active" id="sugars_100g"></div>
+            <p class="label">Proteins</p>
             <div class="slider noUi-active" id="proteins_100g"></div>
-            <p>calcium</p>
+            <p class="label">Calcium</p>
             <div class="slider noUi-active" id="calcium_100g"></div>
-            <p>energy</p>
+            <p class="label">Energy</p>
             <div class="slider noUi-active" id="energy_100g"></div>
 
             <button id="filter-reset" class="styled" onclick="resetFilterValues()">Reset</button>

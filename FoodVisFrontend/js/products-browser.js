@@ -9,7 +9,7 @@ function setProductsBrowserData(products) {
 	var uniqueCats = getCategories(products);
 	var categoryMap = groupProductsByCategory(uniqueCats, products);
 
-	Object.keys(categoryMap).forEach(function(key,inex) {
+	Object.keys(categoryMap).forEach(function(key,index) {
 		d3.select('#products-browser_list')
 			.append('div')
 			.attr('id', key + '_box')
