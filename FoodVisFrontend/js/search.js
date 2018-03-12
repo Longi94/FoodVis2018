@@ -17,7 +17,7 @@ selectedProducts = [];
 prodList = [];
 
 function search() {
-    var query = $("#search-input").val();
+    let query = $("#search-input").val();
 
     query = query.split(" ").join("-");
 
@@ -31,7 +31,10 @@ function search() {
         "http://localhost:3000/api/Products/search",
         body,
         function (result) {
-            setProductsBrowserData($.extend(true, [], result));
+
+            $("#product-list").empty().show();
+            $(".graphs").hide();
+            setProductsBrowserData(result);
             setProductsList(result);
         }
     );
@@ -39,14 +42,8 @@ function search() {
 
 function setVisualization(){
     if(selectedProducts.length > 2){
-        $("#product-list").remove();
-        $("#middle").append(
-            '<div class="graphs">'+
-                '<div id="norm-bar">'+
-                    '<svg width="800" height="500"></svg>'+
-                '</div>'+
-            '</div>'
-        );
+        $("#product-list").hide();
+        $(".graphs").show();
 
         setBarChartData(selectedProducts);
     }
