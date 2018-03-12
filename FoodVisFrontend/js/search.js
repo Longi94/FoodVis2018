@@ -46,6 +46,7 @@ function setVisualization(){
         $(".graphs").show();
 
         setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
     }
 }
 
