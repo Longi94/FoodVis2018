@@ -69,6 +69,10 @@ body {
     justify-content: space-around;
 }
 
+#product-list h2 {
+    margin-left: 10px;
+}
+
 .product {
     position: relative;
     display: flex;

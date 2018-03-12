@@ -32,18 +32,36 @@ function search() {
         body,
         function (result) {
             setProductsBrowserData($.extend(true, [], result));
-            //setBarChartData(result);
             setProductsList(result);
         }
     );
 }
 
-function setProductsList(result) {
-    prodList = $.extend(true, {}, result);
+function setVisualization(){
+    if(selectedProducts.length > 2){
+        $("#product-list").remove();
+        $("#middle").append(
+            '<div class="graphs">'+
+                '<div id="norm-bar">'+
+                    '<svg width="800" height="500"></svg>'+
+                '</div>'+
+            '</div>'
+        );
+
+        setBarChartData(selectedProducts);
+    }
+}
+
+function setProductsList(list) {
+    prodList = $.extend(true, {}, list);
     $("#middle").append("<div id='product-list'></div>");
     let $productView = $("#product-list");
     $productView.html("");
-    $productView.append('<div class="row">');
+    $productView.append(
+        '<button onclick="setVisualization()">Visualize these products</button>'+
+        '<h2>Select products you are interested in by clicking on their icons.</h2>' +
+        '<div class="row">'
+    );
 
     // Create the container for the product images
     let $row = $(".row");
