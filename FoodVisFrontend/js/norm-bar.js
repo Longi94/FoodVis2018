@@ -52,10 +52,13 @@ function setBarChartData(products) {
     if (products.length === 0) {
         return;
     }
+
+    const ids = new Set([]);
     
     data = products.filter(product => {
         for (let i = 0; i < selectedIngredients.length; i++) {
-            if (product[selectedIngredients[i]] > 0) {
+            if (product[selectedIngredients[i]] > 0 && !ids.has(product.id)) {
+                ids.add(product.id);
                 return true;
             }
         }
