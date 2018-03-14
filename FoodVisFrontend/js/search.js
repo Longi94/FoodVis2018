@@ -105,6 +105,9 @@ function selectProduct(product){
         selectedProducts = selectedProducts.filter(function(x){ return x === product});
         $("#c" + product["id"]).removeClass("selected");
     }
+
+    // function from products-browser (left bar):
+    toggleProductSelection(product.id);
 }
 
 function getFilterValues() {

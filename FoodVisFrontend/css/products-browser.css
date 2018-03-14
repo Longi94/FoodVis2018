@@ -18,7 +18,7 @@
 }
 
 .categoryBox:hover {
-	background-color: rgb(68, 69, 81);
+	background-color: rgb(68, 69, 81) !important;
 }
 
 .categoryBox_selected {
@@ -38,6 +38,10 @@
 	border-style: solid;
 	border-width: 1px 0px 0px 0px;
 	border-color: rgb(78, 80, 94);
+}
+
+.categoryBox_product.selected {
+	background-color: green;
 }
 
 .categoryBox_productContainer {
