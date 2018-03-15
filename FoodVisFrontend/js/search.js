@@ -57,8 +57,10 @@ function setProductsList(list) {
     let $productView = $("#product-list");
     $productView.html("");
     $productView.append(
-        '<button onclick="setVisualization()">Visualize these products</button>'+
+        '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
+        '<button class="visualize_button" onclick="setVisualization()">Generate visualization</button>'+
+        '</div>'+
         '<div class="row">'
     );
 
