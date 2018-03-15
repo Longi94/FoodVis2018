@@ -187,6 +187,10 @@ p.title {
     background: rgb(75, 175, 175);
 }
 
+.toolbar button:disabled {
+    background: gray;
+}
+
 button.styled {
     height: 40px;
     width: auto;

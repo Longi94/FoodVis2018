@@ -52,11 +52,13 @@ function setDetailVisualization(){
 }
 
 function setDonutVisualization(){
-    if(selectedProducts.length > 2){
-        $("#product-list").hide();
-        $(".graphs").show();
+    console.log(selectedProducts);
 
-        setBarChartData(selectedProducts);
+    if(selectedProducts.length === 2){
+        $("#product-list").hide();
+        $("#donuts").show();
+
+        setDonutData(selectedProducts);
         setHeatmapData(selectedProducts);
     }
 }
@@ -79,9 +81,9 @@ function setProductsList(list) {
     $productView.append(
         '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button class="visualize_button" onclick="setDetailVisualization()">Detail visualization</button>'+
-        '<button class="visualize_button" onclick="setDonutVisualization()">Donut visualization</button>'+
-        '<button class="visualize_button" onclick="setBarchartVisualization()">Barchart visualization</button>'+
+        '<button class="visualize_button" id="buttonDetail" onclick="setDetailVisualization()">Detail visualization</button>'+
+        '<button class="visualize_button" id="buttonDonut" onclick="setDonutVisualization()">Donut visualization</button>'+
+        '<button class="visualize_button" id="buttonBar" onclick="setBarchartVisualization()">Barchart visualization</button>'+
         '</div>'+
         '<div class="row">'
     );
