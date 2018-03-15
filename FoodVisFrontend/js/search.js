@@ -17,6 +17,7 @@ selectedProducts = [];
 prodList = [];
 
 function search() {
+    selectedProducts = [];
     let query = $("#search-input").val();
 
     query = query.split(" ").join("-");
