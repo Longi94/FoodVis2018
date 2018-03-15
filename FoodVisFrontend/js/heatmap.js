@@ -1,26 +1,19 @@
 let heatmap = function () {
-    let keys = [
-        "fat_100g",
-        //"carbohydrates_100g",
-        "sugars_100g",
-        "fiber_100g",
-        "proteins_100g",
-        "salt_100g"
-    ];
 
     let svg = d3.select("#heatmap > svg"),
-        margin = {top: 20, right:40, bottom: 30, left:110},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        margin = {top: 20, right:40, bottom: 30, left:40},
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
+        // g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"),
+        // gg = svg.append("g").attr("transform", "translate(" + margin.left + "," + height + ")");
 
     let x = d3.scaleBand()
-        .rangeRound([0, width])
+        .rangeRound([margin.left, width - margin.right])
         .padding(0.1)
         .align(0.1);
 
     let y = d3.scaleBand()
-        .domain(keys)
+        .domain(selectedIngredients)
         .rangeRound([0, height])
         .padding(0.1)
         .align(0.1);
@@ -28,7 +21,7 @@ let heatmap = function () {
     let yAxis = d3.axisLeft()
       .scale(y);
 
-    g.call(yAxis);
+    svg.call(yAxis);
 
     let barTooltip = d3.select("body").append("div")
         .attr("class", "bar-tooltip")
@@ -40,7 +33,7 @@ let heatmap = function () {
             .style("top", event.pageY - 65 + "px");
     });
 
-    let productss;
+    let productss, cellWH, heatmapxAxis;
     let returnObj = {};
     returnObj['setHeatMapData'] = function (products) {
         if (products.length === 0) {
@@ -61,7 +54,7 @@ let heatmap = function () {
         productss = products;
         let data = [];
         products.forEach(function (product) {
-            keys.forEach(function (value) {
+            selectedIngredients.forEach(function (value) {
                 data.push({
                     id: product.id,
                     ingredient: value,
@@ -72,14 +65,18 @@ let heatmap = function () {
         });
 
         x.domain(products.map(function (d) {
-            return d.id
+            return d.product_name
         }));
 
-        let cellWH = Math.min(width / products.length, height / keys.length);
+        heatmapxAxis = d3.axisBottom()
+          .scale(x);
 
-        g.html("");
 
-        g.selectAll("rect")
+        cellWH = Math.min((width-margin.left-margin.right) / products.length, height / selectedIngredients.length);
+
+        svg.html("");
+
+        svg.selectAll("rect")
             .data(data)
             .enter()
             .append("rect")
@@ -89,7 +86,7 @@ let heatmap = function () {
             .attr("rx", 3).attr("ry", 3) // rounded corners
             .attr("fill", function(d) {return colors[d.ingredient]})
             .attr("opacity", function(d) {return Math.sqrt(d.value)/10})
-            .attr("x", function(d,i) {return x(d.id)})
+            .attr("x", function(d,i) {return x(d.product) + (x.bandwidth()-cellWH)/2})
             .attr("y", function(d,i) {return y(d.ingredient)})
             .on("mouseover", d => {
                 barTooltip.style("opacity", .75);
@@ -99,6 +96,16 @@ let heatmap = function () {
                 barTooltip.style("opacity", 0);
             })
             .on("click", d => {selectHeatmap(d.ingredient); selectBar(d.ingredient)});
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(" + 0 + "," + height-20 + ")")
+            .call(heatmapxAxis)
+            .selectAll("text")  
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", ".15em")
+                .attr("transform", "rotate(-65)");
     }
 
     let trans = d3.transition()
@@ -107,15 +114,20 @@ let heatmap = function () {
 
     returnObj['selectHeatmap'] = function (ingredient) {
         productss.sort((a, b) => a[ingredient] - b[ingredient]);
-        x.domain(productss.map(d => d.id));
+        x.domain(productss.map(d => d.product_name));
 
         productss.forEach(p => {
-            keys.forEach(k => {
+            selectedIngredients.forEach(k => {
                 d3.select("#cell-"+p.id+k)
                     .transition(trans)
-                    .attr("x", function(d,i) {return x(p.id)})
+                    .attr("x", function(d,i) {return x(p.product_name) + (x.bandwidth()-cellWH)/2})
             });
         });
+
+        svg.select(".x.axis")
+            .transition()
+            .duration(1000)
+            .call(heatmapxAxis);
     }
 
     return returnObj;
