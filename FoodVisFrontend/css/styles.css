@@ -93,9 +93,9 @@ body {
     transition: 0.2s all ease-in-out;
 }
 
-.product:hover  p {
-    color: black;
-    background-color: rgba(255, 255, 255, 1);
+.product p {
+    color: white;
+    background-color: rgba(44, 44, 49, 0.6);
     display: block;
     top: 50%;
     transform: translateY(-50%);
