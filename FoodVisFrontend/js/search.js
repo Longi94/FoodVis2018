@@ -19,7 +19,7 @@ prodList = [];
 function search() {
     // selectedProducts = [];
     let query = $("#search-input").val();
-
+    selectedProducts = [];
     query = query.split(" ").join("-");
 
     let body = {category: query, limit: 50};
@@ -52,6 +52,9 @@ function setDetailVisualization(){
     for(let key in dataMap){
         dataArray.push(dataMap[key]);
     }
+
+    console.log("DATA ARRAY ", dataArray);
+
     if(dataArray.length ===1){
         $("#product-list").hide();
         $(".graphs").hide();

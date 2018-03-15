@@ -19,7 +19,7 @@ var createIngredientNodes = function(ingredients){
 }
 
 var draw = function(ingredientsData, productName){
-	//d3.select("#")
+	d3.selectAll("#product_view svg").remove();
 	let width = 550;
 	let height = 600;
 	let nodesWidth = 250;
@@ -129,7 +129,7 @@ var draw = function(ingredientsData, productName){
   }
  
 function drawProductView(data){
-	//console.log("DATA IN DRAW", data);
+	console.log("DATA IN DRAW", data);
 	let ingredientsData = [];
 	ingredientsData.push({name:"Fat", val:data[0].fat_100g, color:"#ECD078"});
     ingredientsData.push({name:"Carbs", val:data[0].carbohydrates_100g, color:"#D95B43"});
