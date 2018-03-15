@@ -12,10 +12,10 @@ for(var j = 0; j < 4; j++){
       return data;
     };
 
-    var chart = donut()
+    /*var chart = donut()
                   .$el(d3.select("#donut"+j))
                   .data(getData())
-                  .render();
+                  .render();*/
 }
 
 function getFilterValues() {

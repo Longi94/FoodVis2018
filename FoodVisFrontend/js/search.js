@@ -35,7 +35,6 @@ function search() {
 
             $("#product-list").empty().show();
             $(".graphs").hide();
-            $("#product_view").hide();
             setProductsBrowserData(result);
             setProductsList(result);
         }
@@ -43,30 +42,23 @@ function search() {
 }
 
 function setDetailVisualization(){
-    let dataMap = {};
-    let dataArray = [];
-
-    for(let prod in selectedProducts){
-        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
-    }
-    for(let key in dataMap){
-        dataArray.push(dataMap[key]);
-    }
-    if(dataArray.length ===1){
+    if(selectedProducts.length > 2){
         $("#product-list").hide();
-        $(".graphs").hide();
-        $("#product_view").show();
-        drawProductView(dataArray);
+        $(".graphs").show();
+
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
     }
 }
 
 function setDonutVisualization(){
-    if(selectedProducts.length > 2){
-        $("#product-list").hide();
-        $("#product_view").hide();
-        $(".graphs").show();
+    console.log(selectedProducts);
 
-        setBarChartData(selectedProducts);
+    if(selectedProducts.length === 2){
+        $("#product-list").hide();
+        $("#donuts").show();
+
+        setDonutData(selectedProducts);
         setHeatmapData(selectedProducts);
     }
 }
@@ -74,32 +66,12 @@ function setDonutVisualization(){
 function setBarchartVisualization(){
     if(selectedProducts.length > 2){
         $("#product-list").hide();
-        $("#product_view").hide();
         $(".graphs").show();
 
         setBarChartData(selectedProducts);
         setHeatmapData(selectedProducts);
     }
 }
-
-/*
-function setProductViewVisualization(){
-    let dataMap = {};
-    let dataArray = [];
-
-    for(let prod in selectedProducts){
-        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
-    }
-    for(let key in dataMap){
-        dataArray.push(dataMap[key]);
-    }
-    if(dataArray.length ===1){
-        $("#product-list").hide();
-        $(".graphs").show();
-
-        drawProductView(dataArray);
-    }
-}*/
 
 function setProductsList(list) {
     prodList = $.extend(true, {}, list);
@@ -109,9 +81,9 @@ function setProductsList(list) {
     $productView.append(
         '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button class="visualize_button" onclick="setDetailVisualization()">Detail visualization</button>'+
-        '<button class="visualize_button" onclick="setDonutVisualization()">Donut visualization</button>'+
-        '<button class="visualize_button" onclick="setBarchartVisualization()">Barchart visualization</button>'+
+        '<button class="visualize_button" id="buttonDetail" onclick="setDetailVisualization()">Detail visualization</button>'+
+        '<button class="visualize_button" id="buttonDonut" onclick="setDonutVisualization()">Donut visualization</button>'+
+        '<button class="visualize_button" id="buttonBar" onclick="setBarchartVisualization()">Barchart visualization</button>'+
         '</div>'+
         '<div class="row">'
     );

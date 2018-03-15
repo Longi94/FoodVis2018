@@ -187,6 +187,10 @@ p.title {
     background: rgb(75, 175, 175);
 }
 
+.toolbar button:disabled {
+    background: gray;
+}
+
 button.styled {
     height: 40px;
     width: auto;
@@ -252,4 +256,43 @@ ul.ui-menu {
 
 .visualize_button:hover {
     background-color: #5cd661;
+}
+
+#donuts {
+    margin: 0 auto;                            
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-top: 20px;
+
+}
+
+#donuts div h2 {
+    text-align: center;
+}
+.tooltip {
+box-shadow: 0 0 5px #999999;
+display: none;
+font-size: 12px;
+left: 130px;
+padding: 10px;
+position: absolute;
+text-align: center;
+top: 95px;
+width: 80px;
+z-index: 10;
+line-height: 140%; /*Interlineado*/
+font-family: "Open Sans", sans-serif;
+font-weight: 300;
+background: rgba(0, 0, 0, 0.8);
+color: #fff;
+border-radius: 2px;
+}
+
+.label {
+font-weight: 600;
 }
