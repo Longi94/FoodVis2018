@@ -128,18 +128,18 @@ var draw = function(ingredientsData, productName){
 			 .text(function(d){return d.name});								
   }
  
-
-d3.json("example.json", function(error, data) {
-    let ingredientsData = [];
-
-    ingredientsData.push({name:"Fat", val:data[0].fat_100g, color:"#ECD078"});
+function drawProductView(data){
+	//console.log("DATA IN DRAW", data);
+	let ingredientsData = [];
+	ingredientsData.push({name:"Fat", val:data[0].fat_100g, color:"#ECD078"});
     ingredientsData.push({name:"Carbs", val:data[0].carbohydrates_100g, color:"#D95B43"});
     ingredientsData.push({name:"Sugars",val:data[0].sugars_100g, color:"#C02942"});
     ingredientsData.push({name:"Protein",val:data[0].proteins_100g,color:"#425b94"});
     ingredientsData.push({name:"Salt", val:data[0].salt_100g,color:"#45965b"});
-
+    //console.log("INGREDIENTS DATA ARRAY ", ingredientsData);
     draw(ingredientsData, data[0].product_name);
-});
+}
+
 
 function handleMouseOver(d, i) { 
 	d3.select(this).attr({

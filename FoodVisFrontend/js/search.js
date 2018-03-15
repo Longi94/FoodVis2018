@@ -42,12 +42,26 @@ function search() {
 }
 
 function setVisualization(){
-    if(selectedProducts.length > 2){
+    let dataMap = {};
+    let dataArray = [];
+
+    for(let prod in selectedProducts){
+        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
+    }
+    for(let key in dataMap){
+        dataArray.push(dataMap[key]);
+    }
+    console.log(dataArray.length);
+    if(dataArray.length === 1){
+        $("#product-list").hide();
+        $(".graphs").show();
+        drawProductView(dataArray);
+    }else if(dataArray.length > 2){
         $("#product-list").hide();
         $(".graphs").show();
 
-        setBarChartData(selectedProducts);
-        setHeatmapData(selectedProducts);
+        setBarChartData(dataArray);
+        setHeatmapData(dataArray);
     }
 }
 
