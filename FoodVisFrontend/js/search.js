@@ -41,27 +41,33 @@ function search() {
     );
 }
 
-function setVisualization(){
-    let dataMap = {};
-    let dataArray = [];
-
-    for(let prod in selectedProducts){
-        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
-    }
-    for(let key in dataMap){
-        dataArray.push(dataMap[key]);
-    }
-    console.log(dataArray.length);
-    if(dataArray.length === 1){
-        $("#product-list").hide();
-        $(".graphs").show();
-        drawProductView(dataArray);
-    }else if(dataArray.length > 2){
+function setDetailVisualization(){
+    if(selectedProducts.length > 2){
         $("#product-list").hide();
         $(".graphs").show();
 
-        setBarChartData(dataArray);
-        setHeatmapData(dataArray);
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
+    }
+}
+
+function setDonutVisualization(){
+    if(selectedProducts.length > 2){
+        $("#product-list").hide();
+        $(".graphs").show();
+
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
+    }
+}
+
+function setBarchartVisualization(){
+    if(selectedProducts.length > 2){
+        $("#product-list").hide();
+        $(".graphs").show();
+
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
     }
 }
 
@@ -73,7 +79,9 @@ function setProductsList(list) {
     $productView.append(
         '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button class="visualize_button" onclick="setVisualization()">Generate visualization</button>'+
+        '<button class="visualize_button" onclick="setDetailVisualization()">Detail visualization</button>'+
+        '<button class="visualize_button" onclick="setDonutVisualization()">Donut visualization</button>'+
+        '<button class="visualize_button" onclick="setBarchartVisualization()">Barchart visualization</button>'+
         '</div>'+
         '<div class="row">'
     );

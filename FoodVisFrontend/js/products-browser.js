@@ -48,7 +48,7 @@ function setProductsBrowserData(products) {
 	d3.selectAll('.categoryBox_product')
 	    	.append('button')
 	    	.text('Add/Remove')
-	    	.attr('onclick','toggleProductSelection(this.parentNode.attributes.product_id.nodeValue)');
+	    	.attr('onclick','selectProductFromBar(this.parentNode.attributes.product_id.nodeValue)');
 }
 
 function refreshData() {
@@ -142,6 +142,13 @@ function toggleCategory(element) {
 	$('#' + element.id + '_box').toggleClass('categoryBox_selected');
 }
 
+function selectProductFromBar(productId) {
+	toggleProductSelection(productId);
+	setBarChartData(selectedProducts);
+    setHeatmapData(selectedProducts);
+
+}
+
 function toggleProductSelection(productId) {
 	for(prd in productList) {
 		var product = productList[prd];
@@ -171,8 +178,7 @@ function toggleProductSelection(productId) {
 	});
 
 	refreshData();
-	setBarChartData(selectedProducts);
-    setHeatmapData(selectedProducts);
+	
 
 	console.log('selectedProducts:');
 	console.log(selectedProducts);
