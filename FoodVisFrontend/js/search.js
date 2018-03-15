@@ -41,7 +41,27 @@ function search() {
     );
 }
 
-function setVisualization(){
+function setDetailVisualization(){
+    if(selectedProducts.length > 2){
+        $("#product-list").hide();
+        $(".graphs").show();
+
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
+    }
+}
+
+function setDonutVisualization(){
+    if(selectedProducts.length > 2){
+        $("#product-list").hide();
+        $(".graphs").show();
+
+        setBarChartData(selectedProducts);
+        setHeatmapData(selectedProducts);
+    }
+}
+
+function setBarchartVisualization(){
     if(selectedProducts.length > 2){
         $("#product-list").hide();
         $(".graphs").show();
@@ -59,7 +79,9 @@ function setProductsList(list) {
     $productView.append(
         '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button class="visualize_button" onclick="setVisualization()">Generate visualization</button>'+
+        '<button class="visualize_button" onclick="setDetailVisualization()">Detail visualization</button>'+
+        '<button class="visualize_button" onclick="setDonutVisualization()">Donut visualization</button>'+
+        '<button class="visualize_button" onclick="setBarchartVisualization()">Barchart visualization</button>'+
         '</div>'+
         '<div class="row">'
     );
