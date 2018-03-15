@@ -35,6 +35,7 @@ function search() {
 
             $("#product-list").empty().show();
             $(".graphs").hide();
+            $("#product_view").hide();
             setProductsBrowserData(result);
             setProductsList(result);
         }
@@ -42,18 +43,27 @@ function search() {
 }
 
 function setDetailVisualization(){
-    if(selectedProducts.length > 2){
-        $("#product-list").hide();
-        $(".graphs").show();
+    let dataMap = {};
+    let dataArray = [];
 
-        setBarChartData(selectedProducts);
-        setHeatmapData(selectedProducts);
+    for(let prod in selectedProducts){
+        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
+    }
+    for(let key in dataMap){
+        dataArray.push(dataMap[key]);
+    }
+    if(dataArray.length ===1){
+        $("#product-list").hide();
+        $(".graphs").hide();
+        $("#product_view").show();
+        drawProductView(dataArray);
     }
 }
 
 function setDonutVisualization(){
     if(selectedProducts.length > 2){
         $("#product-list").hide();
+        $("#product_view").hide();
         $(".graphs").show();
 
         setBarChartData(selectedProducts);
@@ -64,12 +74,32 @@ function setDonutVisualization(){
 function setBarchartVisualization(){
     if(selectedProducts.length > 2){
         $("#product-list").hide();
+        $("#product_view").hide();
         $(".graphs").show();
 
         setBarChartData(selectedProducts);
         setHeatmapData(selectedProducts);
     }
 }
+
+/*
+function setProductViewVisualization(){
+    let dataMap = {};
+    let dataArray = [];
+
+    for(let prod in selectedProducts){
+        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
+    }
+    for(let key in dataMap){
+        dataArray.push(dataMap[key]);
+    }
+    if(dataArray.length ===1){
+        $("#product-list").hide();
+        $(".graphs").show();
+
+        drawProductView(dataArray);
+    }
+}*/
 
 function setProductsList(list) {
     prodList = $.extend(true, {}, list);
