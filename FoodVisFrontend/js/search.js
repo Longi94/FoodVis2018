@@ -17,7 +17,7 @@ selectedProducts = [];
 prodList = [];
 
 function search() {
-    selectedProducts = [];
+    // selectedProducts = [];
     let query = $("#search-input").val();
 
     query = query.split(" ").join("-");
@@ -78,8 +78,8 @@ function setProductsList(list) {
         let $col = $("#c" + prodList[key]["id"]);
 
         // add image or placeholder
-        if (prodList[key]["image_url"]) {
-            img.src = prodList[key]["image_url"].toString();
+        if (prodList[key]["image_small_url"]) {
+            img.src = prodList[key]["image_small_url"].toString();
         } else {
             img.src = "./images/Placeholder-food.jpg";
         }
