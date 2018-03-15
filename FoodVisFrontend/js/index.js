@@ -18,8 +18,6 @@ for(var j = 0; j < 4; j++){
                   .render();*/
 }
 
-initDonuts();
-
 function getFilterValues() {
   let ingredients = {};
   $(".slider").each(function(){
