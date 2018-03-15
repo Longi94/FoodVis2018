@@ -2,7 +2,7 @@
 uniqueCats = [];
 categoryMap = {};
 productList = [];
-selectedProducts = [];
+let selectedProducts = [];
 
 function setProductsBrowserData(products) {
 	d3.select('#products-browser_list').selectAll("*").remove();
@@ -143,7 +143,6 @@ function toggleCategory(element) {
 }
 
 function toggleProductSelection(productId) {
-	console.log(productId);
 	for(prd in productList) {
 		var product = productList[prd];
 		if(product.id === productId) {
@@ -172,8 +171,8 @@ function toggleProductSelection(productId) {
 	});
 
 	refreshData();
-	setBarChartData(selectedProducts);
-    setHeatmapData(selectedProducts);
+	// setBarChartData(selectedProducts);
+    // setHeatmapData(selectedProducts);
 
 	console.log('selectedProducts:');
 	console.log(selectedProducts);

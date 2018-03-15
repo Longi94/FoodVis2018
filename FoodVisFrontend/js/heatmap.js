@@ -47,6 +47,17 @@ let heatmap = function () {
             return;
         }
 
+        let ids = new Set([]);
+        products = products.filter(product => {
+            for (let i = 0; i < selectedIngredients.length; i++) {
+                if (product[selectedIngredients[i]] > 0 && !ids.has(product.id)) {
+                    ids.add(product.id);
+                    return true;
+                }
+            }
+            return false;
+        });
+
         productss = products;
         let data = [];
         products.forEach(function (product) {
@@ -54,7 +65,7 @@ let heatmap = function () {
                 data.push({
                     id: product.id,
                     ingredient: value,
-                    value: product[value],
+                    value: parseInt(product[value] || 0),
                     product:product.product_name
                 })
             });
@@ -64,7 +75,7 @@ let heatmap = function () {
             return d.id
         }));
 
-        let cellWH = Math.min(width, height) / products.length;
+        let cellWH = Math.min(width / products.length, height / keys.length);
 
         g.selectAll("rect")
             .data(data)
@@ -75,7 +86,7 @@ let heatmap = function () {
             .attr("height", cellWH-2)
             .attr("rx", 3).attr("ry", 3) // rounded corners
             .attr("fill", function(d) {return colors[d.ingredient]})
-            .attr("opacity", function(d) {return d.value/100})
+            .attr("opacity", function(d) {return Math.sqrt(d.value)/10})
             .attr("x", function(d,i) {return x(d.id)})
             .attr("y", function(d,i) {return y(d.ingredient)})
             .on("mouseover", d => {
@@ -85,14 +96,14 @@ let heatmap = function () {
             .on("mouseout", () => {
                 barTooltip.style("opacity", 0);
             })
-            .on("click", d => selectBar(d.ingredient));
+            .on("click", d => {selectHeatmap(d.ingredient); selectBar(d.ingredient)});
     }
 
     let trans = d3.transition()
         .duration(600)
         .ease(d3.easeExpOut);
 
-    function selectBar(ingredient) {
+    returnObj['selectHeatmap'] = function (ingredient) {
         productss.sort((a, b) => a[ingredient] - b[ingredient]);
         x.domain(productss.map(d => d.id));
 
@@ -101,7 +112,6 @@ let heatmap = function () {
                 d3.select("#cell-"+p.id+k)
                     .transition(trans)
                     .attr("x", function(d,i) {return x(p.id)})
-                    .attr("y", function(d,i) {return y(k)})
             });
         });
     }
@@ -111,4 +121,8 @@ let heatmap = function () {
 
 function setHeatmapData(data) {
     heatmap.setHeatMapData(data);
+}
+
+function selectHeatmap(data) {
+    heatmap.selectHeatmap(data);
 }

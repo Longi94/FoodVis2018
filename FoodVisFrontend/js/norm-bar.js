@@ -95,7 +95,7 @@ function setBarChartData(products) {
         .on("mouseout", () => {
             barTooltip.style("opacity", 0);
         })
-        .on("click", d => selectBar(d.key));
+        .on("click", d => {selectBar(d.key); selectHeatmap(d.key)});
 
     g.append("g")
         .attr("class", "axis axis--y")
