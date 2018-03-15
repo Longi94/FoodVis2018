@@ -77,6 +77,8 @@ let heatmap = function () {
 
         let cellWH = Math.min(width / products.length, height / keys.length);
 
+        g.html("");
+
         g.selectAll("rect")
             .data(data)
             .enter()

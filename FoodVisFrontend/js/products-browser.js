@@ -171,8 +171,8 @@ function toggleProductSelection(productId) {
 	});
 
 	refreshData();
-	// setBarChartData(selectedProducts);
-    // setHeatmapData(selectedProducts);
+	setBarChartData(selectedProducts);
+    setHeatmapData(selectedProducts);
 
 	console.log('selectedProducts:');
 	console.log(selectedProducts);
