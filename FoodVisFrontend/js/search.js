@@ -103,10 +103,10 @@ function setProductsList(list) {
 function selectProduct(product){
     if(selectedProducts.indexOf(product) === -1) {
         selectedProducts.push(product);
-        $("#c" + product["id"]).addClass("selected");
+        $("#c" + product["id"]).toggleClass("selected");
     } else {
         selectedProducts = selectedProducts.filter(function(x){ return x === product});
-        $("#c" + product["id"]).removeClass("selected");
+        $("#c" + product["id"]).toggleClass("selected");
     }
 
     // function from products-browser (left bar):
