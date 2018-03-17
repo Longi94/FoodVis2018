@@ -13,18 +13,27 @@
 	height: 100%;
 	border-style: solid;
 	border-width: 1px 0px 1px 0px;
-	border-color: rgb(68, 69, 81);
+	border-color: rgb(62, 62, 71);
 	color: white;
 }
 
-.categoryBox:hover {
-	background-color: rgb(68, 69, 81) !important;
-}
+
 
 .categoryBox_selected {
-	background-color: rgb(68, 69, 81);
+	background-color: rgb(62, 62, 71);
 }
 
+.categoryBox.selected {
+	background: linear-gradient(rgb(44, 44, 49), rgb(62, 62, 71));
+}
+
+.categoryBox.selected:hover {
+	background: linear-gradient(rgb(95, 96, 112), rgb(95, 96, 112));
+}
+
+.categoryBox:hover {
+	background-color: rgb(95, 96, 112) !important;
+}
  .categoryBox > p {
 	font-size: 13px !important;
 }
@@ -34,7 +43,9 @@
 	height: 100%;
 	font-size: 13px !important;
 	color: white;
-
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 8px;
 	border-style: solid;
 	border-width: 1px 0px 0px 0px;
 	border-color: rgb(78, 80, 94);
@@ -50,4 +61,24 @@
 	border-style: solid;
 	border-width: 1px 0px 1px 0px;
 	border-color: white;
+	overflow: hidden;
+	zoom:1;
+	position:relative;
+}
+
+.categoryBox_product:hover {
+	background-color: rgb(95, 96, 112) !important;
+}
+
+.addProduct_button {
+    color: rgb(28, 184, 65);
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.removeProduct_button {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(202, 60, 60);
 }

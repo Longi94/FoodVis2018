@@ -46,9 +46,10 @@ function setProductsBrowserData(products) {
 	});
 
 	d3.selectAll('.categoryBox_product')
-	    	.append('button')
-	    	.text('Add/Remove')
-	    	.attr('onclick','selectProductFromBar(this.parentNode.attributes.product_id.nodeValue)');
+    	.append('button')
+		.attr('class','addProduct_button')
+    	.text('Add')
+    	.attr('onclick','selectProductFromBar(this.parentNode.attributes.product_id.nodeValue)');
 }
 
 function refreshData() {
@@ -58,7 +59,7 @@ function refreshData() {
 			highestCount = categoryMap[key].selectedCount;
 		}
 	});
-	var colorScale = d3.scaleLinear().domain([0,highestCount]).range([0,200]);
+	var colorScale = d3.scaleLinear().domain([0,highestCount]).range([50,230]);
 
 
 	Object.keys(categoryMap).forEach(function(key,index) {
@@ -75,18 +76,24 @@ function refreshData() {
 			.transition()
 				.duration(500)
 				.style("background-color", () => {
-					if(category.selectedCount > 0) return 'rgba(125,'+colorScale(category.selectedCount)+',54,0.35)';
+					if(category.selectedCount > 0) return 'rgba(125,'+colorScale(category.selectedCount)+',54,0.4)';
 					else return 'rgb(44, 44, 49)';
 				});
 
 		for(p in productList) {
 			var prd = productList[p];
 			d3.select('#cat'+key+'prd'+prd.id)
-				.select('p')
-				.text(() => {
-					if(prd.selected === true) return prd.product_name + ' [ ADDED ]';
-					else return prd.product_name;
-				});
+				.html(`<p>${prd.product_name} ${prd.selected?'<span style="color:#5cd661; margin-left:10px"> ADDED </span>':''}</p>`)
+				.append('button')
+				.attr('class',(prd) => {
+		    		if(prd.selected) return 'removeProduct_button';
+		    		else return 'addProduct_button';
+		    	})
+		    	.text((prd) => {
+		    		if(prd.selected) return 'Remove';
+		    		else return 'Add';
+		    	})
+		    	.attr('onclick','selectProductFromBar(this.parentNode.attributes.product_id.nodeValue)');
 		}
 
 	});
@@ -138,8 +145,9 @@ function loadCategory(category) {
 
 function toggleCategory(element) {
 	console.log(element);
-	$('#' + element.id + '_container').toggle();
+	$('#' + element.id + '_container').slideToggle();
 	$('#' + element.id + '_box').toggleClass('categoryBox_selected');
+	$('#' + element.id).toggleClass('selected');
 }
 
 function selectProductFromBar(productId) {
