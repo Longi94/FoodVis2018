@@ -1,156 +1,55 @@
-var r2 = 50;
+function drawProductView(product){
+	var width = 500,
+		height = 500,
+		radius = Math.min(width, height) / 2,
+		innerRadius = 0.3 * radius,
+		product = product[0];
 
-var createIngredientNodes = function(ingredients){
- let nodes = [];
- let width = 500;
- let height = 500;
- let angle;
- let x;
- let y;
- let ingredientsLength = ingredients.length;
+	var pie = d3.pie()
+		.sort(null)
+		.value(function(d) { return d.width; });
 
- for(let i = 0; i < ingredientsLength; i++){
- 	 angle = (i/ (ingredientsLength/2)) * Math.PI;
- 	 x = (200 * Math.cos(angle)) + (width/2);
-	 y = (200 * Math.sin(angle)) + (width/2); 
-	 nodes.push({'x': x, 'y': y, 'val': ingredients[i].val, 'name': ingredients[i].name, 'r':r2, 'angle':angle, 'color':ingredients[i].color});
- }
- return nodes;
-}
+	var total = 0;
+	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient])); 	
 
-var draw = function(ingredientsData, productName){
-	d3.selectAll("#product_view svg").remove();
-	let width = 550;
-	let height = 600;
-	let nodesWidth = 250;
-	let nodesHeight = 250;
-	let cx = width/2;
-	let cy = height/2;
-	let nodes = createIngredientNodes(ingredientsData)
-	let r1 = 90;
+	var arc = d3.arc()
+		.innerRadius(innerRadius)
+		.outerRadius(function (d,i) { 
+			console.log((radius - innerRadius) * d.data[selectedIngredients[i]] + innerRadius);
+			return (radius - innerRadius) * d.data[selectedIngredients[i]] + innerRadius; 
+		});
 
-	let svg = d3.select("#product_view")
-				.append("svg")
-				.attr("width", width)
-				.attr("height", height)
-				.append("g")
+	var outlineArc = d3.arc()
+		.innerRadius(innerRadius)
+		.outerRadius(radius);
 
+	var svg = d3.select("#product_view").append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append("g")
+		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-	let ingredientNodes = svg.selectAll("g")
-		.remove()
-		.exit()
-        .data(nodes);
-
-    let ingredientNodesCanvas = ingredientNodes.enter()
-	    .append("g");
-
-	let productNode = svg.append("g")
-							.attr("x",nodesWidth)
-							.attr("y",nodesHeight);
-
-
- 	productNode.append("circle")
-			     .attr("id", "main-circle")
-			     .attr("r", r1)
-			     .attr("cx", nodesWidth)
-			     .attr("cy",nodesHeight)
-			     .attr("fill", "#3FB8AF")
-			     .attr("stroke", "black")
-			     .attr("stroke-width",1)
-			     .attr("opacity",0.3)   
-			     .attr("pointer-events","all")
-			     //.on("mouseenter", handleMouseOver)
-			     .on("mouseover", handleMouseOver)
-			     .on("mouseout", handleMouseOut);
-			     //.on("mouseleave", handleMouseOut);
-
-    productNode.append("text")
-   				 .attr("x", nodesWidth)
-   				 .attr("y", nodesHeight)
-   				 .attr("text-anchor", "middle")
-   				 .attr("alignment-baseline", "middle")
-   				 .attr("fill","white")
-   				 .attr("font-size","30px")
-   				 .attr("font-weight", "bold")
-   				 .text(productName);
-
-
-	ingredientNodesCanvas.append("circle")
-			.attr("r", function(d){return d.r})
-			.attr("cx", function(d,i){
-				return d.x;
-			})
-			.attr("cy", function(d,i){
-				return d.y;
-			})
-			.attr("fill", function(d){return d.color})//"url('#grad')")
-			.attr("stroke","black")
-			.attr("stroke-width",1);
-
-	svg.selectAll('line2')
-	  .remove()
-	  .exit()
-      .data(nodes)
-      .enter()
-      .append('line')
-      .attr('class', 'link')
-      .attr('x1', function(d) {return (d.x - d.r * Math.cos(d.angle)); })
-      .attr('y1', function(d) { return (d.y - d.r * Math.sin(d.angle)) })
-      .attr('x2', function(d){return (d.x + nodesWidth)/2})
-      .attr('y2', function(d){return (d.y+nodesHeight)/2})
-	  .attr("stroke","red")
-      .attr("stroke-width", 2)
-      .attr("fill","none");
-
-	ingredientNodesCanvas.append("line")
-			.attr("stroke", "white")
-			.attr("stroke-width",2)
-			.attr("x1", function(d){return d.x+d.r;})
-			.attr("y1", function(d){return d.y;})
-			.attr("x2", function(d){return d.x-d.r;})
-			.attr("y2",function(d){return d.y;});
-			
-						
-	ingredientNodesCanvas.append("text")
-			 .attr("text-anchor","middle")
-			 .attr("alignment-baseline", "middle")
-			 .attr("dx", function(d){return d.x})
-			 .attr("dy", function(d){return d.y+(r2/2)})
-			 .attr("fill","white")
-			 .text(function(d) {return d.val});
-
-	ingredientNodesCanvas.append("text")
-			 .attr("text-anchor", "middle")
-			 .attr("alignment-baseline", "middle")
-			 .attr("dx",function(d){return d.x})
-			 .attr("dy", function(d){return d.y-10})
-			 .attr("fill","white")
-			 .text(function(d){return d.name});								
-  }
- 
-function drawProductView(data){
-	console.log("DATA IN DRAW", data);
-	let ingredientsData = [];
-	ingredientsData.push({name:"Fat", val:data[0].fat_100g, color:"#ECD078"});
-    ingredientsData.push({name:"Carbs", val:data[0].carbohydrates_100g, color:"#D95B43"});
-    ingredientsData.push({name:"Sugars",val:data[0].sugars_100g, color:"#C02942"});
-    ingredientsData.push({name:"Protein",val:data[0].proteins_100g,color:"#425b94"});
-    ingredientsData.push({name:"Salt", val:data[0].salt_100g,color:"#45965b"});
-    //console.log("INGREDIENTS DATA ARRAY ", ingredientsData);
-    draw(ingredientsData, data[0].product_name);
-}
-
-
-function handleMouseOver(d, i) { 
-	d3.select(this).attr({
-	 opacity:1
-	});
-	console.log("helloooo");
-}
-
-function handleMouseOut(d,i){
-	d3.select(this).attr({
-		opacity:0.5
+	let _data = [];
+	selectedIngredients.forEach(ingredient => {
+		let x = {};
+		x[ingredient] = product[ingredient];
+		_data.push(x);
 	});
 
+	var path = svg.selectAll(".solidArc")
+		.data(pie(_data))
+		.enter().append("path")
+		.attr("fill", d => colors[d.key])
+		.attr("class", "solidArc")
+		.attr("stroke", "gray")
+		.attr("d", arc)
+
+
+	var outerPath = svg.selectAll(".outlineArc")
+		.data(pie(_data))
+		.enter().append("path")
+		.attr("fill", "none")
+		.attr("stroke", "gray")
+		.attr("class", "outlineArc")
+		.attr("d", outlineArc);  
 }
