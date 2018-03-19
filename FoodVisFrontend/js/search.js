@@ -125,9 +125,9 @@ function setProductsList(list) {
     $productView.append(
         '<div style="text-align:center; margin-bottom:20px;">'+
         '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button class="visualize_button" onclick="setDetailVisualization()">Detail visualization</button>'+
-        '<button class="visualize_button" onclick="setDonutVisualization()">Donut visualization</button>'+
-        '<button class="visualize_button" onclick="setBarchartVisualization()">Barchart visualization</button>'+
+        '<button id="detailVisualizeButton" class="visualize_button disabled" onclick="setDetailVisualization()">Detail visualization</button>'+
+        '<button id="donutVisualizationButton" class="visualize_button disabled" onclick="setDonutVisualization()">Donut visualization</button>'+
+        '<button id="barchartVisualizationButton" class="visualize_button disabled" onclick="setBarchartVisualization()">Barchart visualization</button>'+
         '</div>'+
         '<div class="row">'
     );
@@ -169,12 +169,15 @@ function setProductsList(list) {
 }
 
 function selectProduct(product){
-    if(selectedProducts.indexOf(product) === -1) {
+    let index = selectedProducts.indexOf(product);
+    if(index === -1) {
         selectedProducts.push(product);
         $("#c" + product["id"]).toggleClass("selected");
+        checkButtonAvailability();
     } else {
-        selectedProducts = selectedProducts.filter(function(x){ return x === product});
         $("#c" + product["id"]).toggleClass("selected");
+        selectedProducts.splice(index, 1);
+        checkButtonAvailability();
     }
 
     // function from products-browser (left bar):
@@ -204,4 +207,28 @@ function getFilterValues() {
         ingredients['and'].push(asd1, asd2);
     });
     return ingredients['and'].length > 0 ? ingredients : null;
+}
+
+function checkButtonAvailability(){
+    let count = selectedProducts.length;
+    console.log(count);
+
+    if(count < 1){
+        $('.visualize_button').addClass('disabled');
+    }
+    if(count === 1){
+        $('#detailVisualizeButton').removeClass('disabled');
+        $('#donutVisualizationButton').addClass('disabled');
+        $('#barchartVisualizationButton').addClass('disabled');
+    }
+    if(count === 2){
+        $('#detailVisualizeButton').addClass('disabled');
+        $('#donutVisualizationButton').removeClass('disabled');
+        $('#barchartVisualizationButton').removeClass('disabled');
+    }
+    if(count > 2){
+        $('#detailVisualizeButton').addClass('disabled');
+        $('#donutVisualizationButton').addClass('disabled');
+        $('#barchartVisualizationButton').removeClass('disabled');
+    }
 }

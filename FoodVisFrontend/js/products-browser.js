@@ -163,12 +163,7 @@ function toggleProductSelection(productId) {
 		if(product.id === productId) {
 			if(!product.selected) { 
 				product.selected = true;
-				if(selectedProducts.indexOf(product) === -1) {
-			        selectedProducts.push(product);
-				}
-			}
-			else {
-				selectedProducts = selectedProducts.filter(function(x){ return x.id !== productId});
+			} else {
 				product.selected = false;
 			}
 		}
@@ -186,10 +181,4 @@ function toggleProductSelection(productId) {
 	});
 
 	refreshData();
-	
-
-	console.log('selectedProducts:');
-	console.log(selectedProducts);
-
-	console.log(categoryMap);
 }

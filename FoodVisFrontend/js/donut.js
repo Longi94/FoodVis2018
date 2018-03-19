@@ -13,6 +13,15 @@ function setDonutData(products) {
 
   const ids = new Set([]);
 
+  var pColors = ["#C02942", "#425b94"];
+  var productNames = products.map(p => p.product_name);
+  
+  $("#donuts").append("<div id='legendContainer'></div>");
+  $("#donuts").append("<div id='donutListContainer'></div>");
+  for(let i = 0; i < productNames.length; i++){
+    $("#legendContainer").append("<div class='legendDonuts'><div class='coloredBox' style='background-color: "+pColors[i]+"''></div><p class='legendTitle'>"+productNames[i]+"</p></div>");
+  }
+
   keys.forEach(key => {
     donutData = products.map(function(product){ return {"name": product["product_name"], "value": parseInt(product[key] || 0)}});
   
@@ -21,23 +30,20 @@ function setDonutData(products) {
     var height = 360;
     var radius = Math.min(width, height) / 2;
 
-    var color = d3.scaleOrdinal(d3.schemeCategory20c);
 
-    var container = d3.select('#donuts').append('div')
+
+    var container = d3.select('#donutListContainer').append('div')
     container.attr('id', key).append('h2').text(key.split("_")[0])
     
-    let tooltip = container.append('div')    
-      .attr('id', 'tooltip_'+key)            
-      .attr('class', 'tooltip');
+    var tooltip_donut = d3.select("body").append("div")
+            .attr("class", "bar-tooltip")
+            .style("opacity", "0");
 
-    tooltip.append('div')                        
-      .attr('class', 'label');                   
-
-    tooltip.append('div')                        
-      .attr('class', 'count');                   
-
-    tooltip.append('div')                        
-      .attr('class', 'percent');  
+    $(document).mousemove(event => {
+      tooltip_donut
+        .style("left", event.pageX - 100 + "px")
+        .style("top", event.pageY - 65 + "px");
+    });
 
 
     let svg = container.append('svg')
@@ -67,50 +73,17 @@ function setDonutData(products) {
       .append('path')
       .attr('d', arc)
       .attr('fill', function(d, i) { 
-        return color(d.data.name);
+        return pColors[i];
       });
 
     path.on('mouseover', function(d) {
-      var total = d3.sum(donutData.map(function(d) {
-        return d.value;
-      }));
-      var percent = Math.round(1000 * d.data.value / total) / 10;
-
-      var x = d3.select('#tooltip_'+key);
-
-      x.select('.label').html(key.split("_")[0]);
-      x.select('.count').html(d.data.value + 'g per 100g');
-      x.style('display', 'block');
+      tooltip_donut.style("opacity", .75);
+      tooltip_donut.html("<span>"+d.data.name+"</span><span>" + key.split("_")[0] + "</span><span>" + d.data.value + "g per 100g</span>");
     });
             
-    path.on('mouseout', function() {
-      var x = d3.select('#tooltip_'+key);
-      x.style('display', 'none');
-    });
-            
-    var legend = svg.selectAll('.legend')
-      .data(color.domain())
-      .enter()
-      .append('g')
-      .attr('class', 'legend')
-      .attr('transform', function(d, i) {
-        var height = legendRectSize + legendSpacing;
-        var offset =  height * color.domain().length / 2;
-        var horz = -2 * legendRectSize;
-        var vert = i * height - offset;
-        return 'translate(' + horz + ',' + vert + ')';
-      });
-            
-    legend.append('rect')
-      .attr('width', legendRectSize)
-      .attr('height', legendRectSize)
-      .style('fill', color)
-      .style('stroke', color);
-            
-    legend.append('text')
-      .attr('x', legendRectSize + legendSpacing)
-      .attr('y', legendRectSize - legendSpacing)
-      .text(function(d) { return d; });
+    path.on('mouseout', function() {  
+      tooltip_donut.style("opacity", 0);
+    });  
   }  
 });        
 }

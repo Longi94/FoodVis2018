@@ -59,6 +59,11 @@ body {
     overflow-x: hidden;
 }
 
+#product-list {
+    width: 95%;
+    margin: 0 auto;
+}
+
 #product-list .row {
     display: flex;
     flex-direction: row;
@@ -256,33 +261,70 @@ ul.ui-menu {
 
 .visualize_button:hover {
     background-color: #5cd661;
+    pointer: cursor;
+}
+
+.visualize_button.disabled {
+    opacity: 0.5;
+}
+
+.visualize_button.disabled:hover{
+    background-color: #4CAF50;
+    pointer: default;
 }
 
 #donuts {
+    display: flex;
     margin: 0 auto;                            
     position: relative;
+    flex-direction: column;
+    width: 90%;
+}
 
+#donutListContainer {
     display: flex;
     flex-direction: row;
-    width: 90%;
+    width: 100%;
     flex-wrap: wrap;
     justify-content: space-around;
     padding-top: 20px;
+}
 
+#legendContainer {
+    padding-top: 25px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.legendDonuts {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.coloredBox {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    border: 1px solid black;
 }
 
 #donuts div h2 {
     text-align: center;
 }
+
 .tooltip {
 box-shadow: 0 0 5px #999999;
 display: none;
 font-size: 12px;
-left: 130px;
 padding: 10px;
 position: absolute;
 text-align: center;
-top: 95px;
 width: 80px;
 z-index: 10;
 line-height: 140%; /*Interlineado*/
