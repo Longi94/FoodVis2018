@@ -47,6 +47,11 @@ function initSliders() {
         'max': 100
       }
     });
+    slider.noUiSlider.on('end', function(){
+      console.log('hoi');
+      search();
+    });
   });
 }
 initSliders();
+

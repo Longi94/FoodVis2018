@@ -36,6 +36,7 @@ function search() {
             $("#product-list").empty().show();
             $(".graphs").hide();
             $("#product_view").hide();
+            $("#donuts").hide();
             setProductsBrowserData(result);
             setProductsList(result);
         }
@@ -64,13 +65,25 @@ function setDetailVisualization(){
 }
 
 function setDonutVisualization(){
-    if(selectedProducts.length > 2){
-        $("#product-list").hide();
-        $("#product_view").hide();
-        $(".graphs").show();
+    let dataMap = {};
+    let dataArray = [];
 
-        setBarChartData(selectedProducts);
-        setHeatmapData(selectedProducts);
+    for(let prod in selectedProducts){
+        dataMap[selectedProducts[prod].id] = selectedProducts[prod]
+    }
+    for(let key in dataMap){
+        dataArray.push(dataMap[key]);
+    }
+
+    console.log(dataArray);
+
+    if(dataArray.length === 2){
+        $("#product-list").hide();
+        $(".graphs").hide();
+
+        $("#donuts >div").remove();
+        $("#donuts").show();
+        setDonutData(dataArray);
     }
 }
 
