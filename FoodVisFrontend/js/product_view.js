@@ -7,21 +7,31 @@ function drawProductView(product){
 
 	var pie = d3.pie()
 		.sort(null)
-		.value(function(d) { return d.width; });
+		.value(function(d,i) { return .5 });
 
-	var total = 0;
-	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient])); 	
+	var max = 0;
+	selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient]))); 	
 
 	var arc = d3.arc()
 		.innerRadius(innerRadius)
-		.outerRadius(function (d,i) { 
-			console.log((radius - innerRadius) * d.data[selectedIngredients[i]] + innerRadius);
-			return (radius - innerRadius) * d.data[selectedIngredients[i]] + innerRadius; 
+		.outerRadius(function (d,i) {
+			let maxx = d.data[selectedIngredients[i]]/max > 1 ? 1 : d.data[selectedIngredients[i]]/max
+			return (radius - innerRadius) * maxx + innerRadius;
 		});
 
 	var outlineArc = d3.arc()
 		.innerRadius(innerRadius)
 		.outerRadius(radius);
+
+	let arcTooltip = d3.select("body").append("div")
+        .attr("class", "bar-tooltip")
+        .style("opacity", "0");
+
+    $(document).mousemove(event => {
+        arcTooltip
+            .style("left", event.pageX - 100 + "px")
+            .style("top", event.pageY - 65 + "px");
+    });
 
 	var svg = d3.select("#product_view").append("svg")
 		.attr("width", width)
@@ -36,16 +46,23 @@ function drawProductView(product){
 		_data.push(x);
 	});
 
-	var path = svg.selectAll(".solidArc")
+	svg.selectAll(".solidArc")
 		.data(pie(_data))
 		.enter().append("path")
-		.attr("fill", d => colors[d.key])
+		.attr("fill", (d,i) => colors[selectedIngredients[i]])
 		.attr("class", "solidArc")
 		.attr("stroke", "gray")
 		.attr("d", arc)
+		.on("mouseover", (d,i) => {
+            arcTooltip.style("opacity", .75);
+            arcTooltip.html("<span>" + selectedIngredients[i] + "</span><span>" + d.data[selectedIngredients[i]]+ "</span>");
+        })
+        .on("mouseout", () => {
+            arcTooltip.style("opacity", 0);
+        })
 
 
-	var outerPath = svg.selectAll(".outlineArc")
+	svg.selectAll(".outlineArc")
 		.data(pie(_data))
 		.enter().append("path")
 		.attr("fill", "none")
