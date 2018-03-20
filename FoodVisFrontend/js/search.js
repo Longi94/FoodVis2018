@@ -181,7 +181,7 @@ function selectProduct(product){
     }
 
     // function from products-browser (left bar):
-    toggleProductSelection(product.id);
+    toggleProductSelectionBrowser(product.id);
 }
 
 function getFilterValues() {

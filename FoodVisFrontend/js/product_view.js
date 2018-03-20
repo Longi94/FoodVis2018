@@ -6,19 +6,27 @@ function drawProductView(product){
 		product = product[0];
 
 	var total = 0;
-	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient]));	
+	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient]));
+	
+	let local_colors = colors;
+	let local_selectedIngredients = selectedIngredients;
+	if (total < 100) {
+		product['other'] = 100 - total;
+		local_selectedIngredients.push('other');
+		local_colors['other'] = "transparent"
+	}
+
+	var max = 0;
+	local_selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient]))); 	
 
 	var pie = d3.pie()
 		.sort(null)
-		.value(function(d,i) { console.log(d); return total/d[selectedIngredients[i]] });
-
-	var max = 0;
-	selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient]))); 	
+		.value(function(d,i) { return Object.values(d)[0] });
 
 	var arc = d3.arc()
 		.innerRadius(innerRadius)
 		.outerRadius(function (d,i) {
-			let maxx = d.data[selectedIngredients[i]]/max > 1 ? 1 : d.data[selectedIngredients[i]]/max
+			let maxx = d.data[local_selectedIngredients[i]]/max > 1 ? 1 : d.data[local_selectedIngredients[i]]/max
 			return (radius - innerRadius) * maxx + innerRadius;
 		});
 
@@ -36,7 +44,6 @@ function drawProductView(product){
             .style("top", event.pageY - 65 + "px");
     });
 
-    console.log(product);
     d3.select("#product_view").append("h2").text(product.product_name);
 
     d3.select("#product_view").select("svg").remove();
@@ -49,22 +56,32 @@ function drawProductView(product){
 		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 	let _data = [];
-	selectedIngredients.forEach(ingredient => {
+	local_selectedIngredients.forEach(ingredient => {
 		let x = {};
-		x[ingredient] = product[ingredient];
+		x[ingredient] = +product[ingredient];
 		_data.push(x);
 	});
 
+	_data.forEach((obj, i) => {
+		Object.keys(obj).forEach(k => {
+			if (obj[k] !== 0) return;
+			console.log(k, obj[k]);
+			delete local_colors[k];
+			delete local_selectedIngredients[i];
+		})	
+	});
+
+	console.log(_data);
 	svg.selectAll(".solidArc")
 		.data(pie(_data))
 		.enter().append("path")
-		.attr("fill", (d,i) => colors[selectedIngredients[i]])
+		.attr("fill", (d,i) => local_colors[local_selectedIngredients[i]])
 		.attr("class", "solidArc")
 		.attr("stroke", "gray")
 		.attr("d", arc)
 		.on("mouseover", (d,i) => {
             arcTooltip.style("opacity", .75);
-            arcTooltip.html("<span>" + selectedIngredients[i] + "</span><span>" + d.data[selectedIngredients[i]]+ "</span>");
+            arcTooltip.html("<span>" + local_selectedIngredients[i] + "</span><span>" + d.data[local_selectedIngredients[i]]+ "g</span>");
         })
         .on("mouseout", () => {
             arcTooltip.style("opacity", 0);
