@@ -108,10 +108,6 @@ let heatmap = function () {
                 .attr("transform", "rotate(-65)");
     }
 
-    let trans = d3.transition()
-        .duration(600)
-        .ease(d3.easeExpOut);
-
     returnObj['selectHeatmap'] = function (ingredient) {
         productss.sort((a, b) => a[ingredient] - b[ingredient]);
         x.domain(productss.map(d => d.product_name));
@@ -119,14 +115,17 @@ let heatmap = function () {
         productss.forEach(p => {
             selectedIngredients.forEach(k => {
                 d3.select("#cell-"+p.id+k)
-                    .transition(trans)
+                    .transition()
+                    .duration(600)
+                    .ease(d3.easeExpOut)
                     .attr("x", function(d,i) {return x(p.product_name) + (x.bandwidth()-cellWH)/2})
             });
         });
 
         svg.select(".x.axis")
             .transition()
-            .duration(1000)
+            .duration(600)
+            .ease(d3.easeExpOut)
             .call(heatmapxAxis);
     }
 
