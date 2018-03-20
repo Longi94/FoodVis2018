@@ -41,8 +41,6 @@ function setProductsBrowserData(products) {
 			.text(function(d) {
 	            return d.product_name;
 	        });
-
-
 	});
 
 	d3.selectAll('.categoryBox_product')
@@ -151,13 +149,14 @@ function toggleCategory(element) {
 }
 
 function selectProductFromBar(productId) {
-	toggleProductSelection(productId);
+	var p = productList.filter(x => x.id === productId);
+	toggleProductSelectionBrowser(productId);
+	selectProduct(p[0]);
 	setBarChartData(selectedProducts);
     setHeatmapData(selectedProducts);
-
 }
 
-function toggleProductSelection(productId) {
+function toggleProductSelectionBrowser(productId) {
 	for(prd in productList) {
 		var product = productList[prd];
 		if(product.id === productId) {
