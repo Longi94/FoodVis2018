@@ -5,9 +5,12 @@ function drawProductView(product){
 		innerRadius = 0.3 * radius,
 		product = product[0];
 
+	var total = 0;
+	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient]));	
+
 	var pie = d3.pie()
 		.sort(null)
-		.value(function(d,i) { return .5 });
+		.value(function(d,i) { console.log(d); return total/d[selectedIngredients[i]] });
 
 	var max = 0;
 	selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient]))); 	
@@ -32,6 +35,9 @@ function drawProductView(product){
             .style("left", event.pageX - 100 + "px")
             .style("top", event.pageY - 65 + "px");
     });
+
+    console.log(product);
+    d3.select("#product_view").append("h2").text(product.product_name);
 
 	var svg = d3.select("#product_view").append("svg")
 		.attr("width", width)
