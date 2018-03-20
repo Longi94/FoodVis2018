@@ -39,6 +39,9 @@ function drawProductView(product){
     console.log(product);
     d3.select("#product_view").append("h2").text(product.product_name);
 
+    d3.select("#product_view").select("svg").remove();
+    d3.select("#product_view").select("h2").remove();
+
 	var svg = d3.select("#product_view").append("svg")
 		.attr("width", width)
 		.attr("height", height)
