@@ -58,7 +58,7 @@ let heatmap = function () {
                 data.push({
                     id: product.id,
                     ingredient: value,
-                    value: parseInt(product[value] || 0),
+                    value: parseFloat(product[value] || 0),
                     product:product.product_name
                 })
             });
