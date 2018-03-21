@@ -142,7 +142,7 @@ function loadCategory(category) {
 }
 
 function toggleCategory(element) {
-	console.log(element);
+	console.log(element.id);
 	$('#' + element.id + '_container').slideToggle();
 	$('#' + element.id + '_box').toggleClass('categoryBox_selected');
 	$('#' + element.id).toggleClass('selected');

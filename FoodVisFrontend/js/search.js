@@ -19,7 +19,6 @@ prodList = [];
 function search() {
     // selectedProducts = [];
     let query = $("#search-input").val();
-    selectedProducts = [];
     query = query.split(" ").join("-");
 
     let body = {category: query, limit: 50};
@@ -142,10 +141,10 @@ function setProductsList(list) {
         img.style.height = "150px";
 
         // create container for product
-        $row.append('<div id="c' + prodList[key]["id"] + '" class="product">');
+        $row.append('<div id="' + prodList[key]["id"] + '" class="product">');
 
         // select product container
-        let $col = $("#c" + prodList[key]["id"]);
+        let $col = $("#" + prodList[key]["id"]);
 
         // add image or placeholder
         if (prodList[key]["image_small_url"]) {
@@ -166,19 +165,24 @@ function setProductsList(list) {
         });
     }
     $row.append("</div>");
+
+    Object.values(prodList)
+      .filter(product => selectedProducts.some(e => e.id === product.id))
+      .forEach(product => {
+        toggleCategory(product);
+      });
 }
 
 function selectProduct(product){
-    let index = selectedProducts.indexOf(product);
+    let index = selectedProducts
+      .findIndex(d => d.id == product.id);
     if(index === -1) {
         selectedProducts.push(product);
-        $("#c" + product["id"]).toggleClass("selected");
-        checkButtonAvailability();
     } else {
-        $("#c" + product["id"]).toggleClass("selected");
         selectedProducts.splice(index, 1);
-        checkButtonAvailability();
     }
+    toggleCategory(product);
+    checkButtonAvailability();
 
     // function from products-browser (left bar):
     toggleProductSelectionBrowser(product.id);

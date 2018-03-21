@@ -6,10 +6,12 @@ function drawProductView(product){
 		product = product[0];
 
 	var total = 0;
-	selectedIngredients.forEach(ingredient => total += parseInt(product[ingredient]));
+	selectedIngredients.forEach(ingredient => {
+		total += parseInt(product[ingredient] || 0)
+	});
 	
-	let local_colors = colors;
-	let local_selectedIngredients = selectedIngredients;
+	let local_colors = JSON.parse(JSON.stringify(colors));
+	let local_selectedIngredients = JSON.parse(JSON.stringify(selectedIngredients));
 	if (total < 100) {
 		product['other'] = 100 - total;
 		local_selectedIngredients.push('other');
@@ -17,10 +19,10 @@ function drawProductView(product){
 	}
 
 	var max = 0;
-	local_selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient]))); 	
+	local_selectedIngredients.forEach(ingredient => max = Math.max(max, parseInt(product[ingredient] || 0))); 	
 
 	var pie = d3.pie()
-		.sort(null)
+		.sort((d1, d2) => {return Object.values(d1)[0] - Object.values(d2)[0]})
 		.value(function(d,i) { return Object.values(d)[0] });
 
 	var arc = d3.arc()
@@ -65,13 +67,12 @@ function drawProductView(product){
 	_data.forEach((obj, i) => {
 		Object.keys(obj).forEach(k => {
 			if (obj[k] !== 0) return;
-			console.log(k, obj[k]);
 			delete local_colors[k];
 			delete local_selectedIngredients[i];
 		})	
 	});
 
-	console.log(_data);
+	console.info(_data);
 	svg.selectAll(".solidArc")
 		.data(pie(_data))
 		.enter().append("path")
