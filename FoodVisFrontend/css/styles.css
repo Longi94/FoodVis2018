@@ -261,7 +261,7 @@ ul.ui-menu {
 
 .visualize_button:hover {
     background-color: #5cd661;
-    pointer: cursor;
+    cursor: pointer;
 }
 
 .visualize_button.disabled {
