@@ -19,9 +19,11 @@ prodList = [];
 function search() {
     // selectedProducts = [];
     let query = $("#search-input").val();
-    query = query.split(" ").join("-");
+    let queryCat = query.split(" ").join("-");
 
-    let body = {category: query, limit: 50};
+    let queryPrd = query;
+
+    let body = {category: queryCat, product_name: queryPrd, limit: 50};
     let filterValues = getFilterValues();
     if (filterValues) {
         body['ingredients'] = JSON.stringify(filterValues);
