@@ -18,7 +18,7 @@ let heatmap = function () {
         .padding(0.1)
         .align(0.1);
 
-    let yAxis = d3.axisLeft()
+    let yAxis = d3.axisRight()
       .scale(y);
 
     svg.call(yAxis);
@@ -107,6 +107,12 @@ let heatmap = function () {
                 .attr("dx", "-.8em")
                 .attr("dy", ".15em")
                 .attr("transform", "rotate(-65)");
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", "translate(" + (750) + "," + 0 + ")")
+            .call(yAxis)
+            .selectAll("text")
     }
 
     returnObj['selectHeatmap'] = function (ingredient) {
