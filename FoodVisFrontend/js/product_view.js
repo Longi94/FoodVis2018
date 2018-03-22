@@ -64,11 +64,11 @@ function drawProductView(product){
     legend.append("text")
     	  .attr("text-anchor","middle")
     	  .attr("dominant-baseline","middle")
-    	  .attr("font-size",35)
+    	  .attr("font-size",27)
     	  .attr("font-weight","bold")
     	  .attr("x", 300)
     	  .attr("y",20)
-    	  .text(product.product_name);
+    	  .text(product.product_name.toUpperCase());
 
     /*legend.append("foreignObject")
     .attr("width",dwidth)
@@ -160,10 +160,10 @@ function drawProductView(product){
    		  .attr("y",50)
    		  .attr("text-anchor","middle")
    		  .attr("dominant-baseline","middle")
-   		  .attr("font-size",20)
+   		  .attr("font-size",18)
    		  .attr("font-weight","bold")
    		  .attr("fill","white")
-   		  .text(function(d){return d.ingredient_name});
+   		  .text(function(d){return d.ingredient_name.toUpperCase()});
 
    legendG.append("text")
    		  .attr("x",function(d,i){
@@ -179,7 +179,7 @@ function drawProductView(product){
    		  .attr("y",80)
    		  .attr("text-anchor","middle")
    		  .attr("dominant-baseline","middle")
-   		  .attr("font-size",20)
+   		  .attr("font-size",18)
    		  .attr("font-weight","bold")
    		  .attr("fill","white")
    		  .text(function(d){return d.value+"g"})
