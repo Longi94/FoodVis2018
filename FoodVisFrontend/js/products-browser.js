@@ -48,6 +48,8 @@ function setProductsBrowserData(products) {
 		.attr('class','addProduct_button')
     	.text('Add')
     	.attr('onclick','selectProductFromBar(this.parentNode.attributes.product_id.nodeValue)');
+
+    refreshData();
 }
 
 function refreshData() {
@@ -116,24 +118,29 @@ function getCategories(products) {
 }
 
 function groupProductsByCategory(categories, products) {
-	var result = {};
-	for(var i = 0; i < categories.length; i++) {
-		result[categories[i].toLowerCase()] = {
-			selectedCount: 0,
-			products: []
-		};
-	}
-	for(var i = 0; i < products.length; i++) {
-		var prd = products[i];
+    let result = {};
+    for (let i = 0; i < categories.length; i++) {
+        result[categories[i].toLowerCase()] = {
+            selectedCount: 0,
+            products: []
+        };
+    }
+    for (let i = 0; i < products.length; i++) {
+        let prd = products[i];
 
-		for(var j = 0; j < categories.length; j++) {
-			if(prd.categories_tags.includes(categories[j].toLowerCase())) {
-				result[categories[j].toLowerCase()].products.push(prd);
-			}
-		}
-	}
-	console.log(result);
-	return result;
+        for (let j = 0; j < categories.length; j++) {
+            if (prd.categories_tags.includes(categories[j].toLowerCase())) {
+                let index = selectedProducts.findIndex(d => d.id === prd.id);
+                if(index !== -1) {
+                    result[categories[j].toLowerCase()].selectedCount++;
+                    prd.selected = true;
+                }
+                result[categories[j].toLowerCase()].products.push(prd);
+            }
+        }
+    }
+    console.log(result);
+    return result;
 }
 
 function loadCategory(category) {
