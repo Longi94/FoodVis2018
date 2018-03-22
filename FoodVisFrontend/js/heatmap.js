@@ -81,11 +81,12 @@ let heatmap = function () {
             .enter()
             .append("rect")
             .attr("id", d => "cell-"+d.id+d.ingredient)
+            .attr("stroke", "grey")
             .attr("width", cellWH-2)
             .attr("height", cellWH-2)
             .attr("rx", 3).attr("ry", 3) // rounded corners
             .attr("fill", function(d) {return colors[d.ingredient]})
-            .attr("opacity", function(d) {return Math.sqrt(d.value)/10})
+            .attr("fill-opacity", function(d) {return Math.sqrt(d.value)/10})
             .attr("x", function(d,i) {return x(d.product) + (x.bandwidth()-cellWH)/2})
             .attr("y", function(d,i) {return y(d.ingredient)})
             .on("mouseover", d => {
