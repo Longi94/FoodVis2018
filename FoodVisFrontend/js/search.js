@@ -183,7 +183,11 @@ function selectProduct(product){
 }
 
 function selectAll() {
-    selectedProducts = productList.slice();
+    productList.forEach(product => {
+        if (!product.selected) {
+            selectedProducts.push(product);
+        }
+    });
     productList.forEach(product => product.selected = true);
     Object.keys(categoryMap).forEach(key => {
         categoryMap[key].selectedCount = categoryMap[key].products.length;
