@@ -171,6 +171,8 @@ function setProductsList(list) {
       .forEach(product => {
         toggleCategory(product);
       });
+
+    checkButtonAvailability();
 }
 
 function selectProduct(product){
