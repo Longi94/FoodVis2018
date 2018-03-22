@@ -34,15 +34,12 @@ function search() {
         body,
         function (result) {
 
-            $("#product-list").empty().show();
-            $(".graphs").hide();
-            $("#product_view").hide();
-            $("#donuts").hide();
+            $("#middle").children().hide();
+            $("#product-list").show().find(".row").empty();
 
             result = result.filter(res => {
               return selectedIngredients.some(ing => {return res[ing] > 0;})
             });
-
             setProductsBrowserData(result);
             setProductsList(result);
         }
@@ -63,9 +60,9 @@ function setDetailVisualization(){
     console.log("DATA ARRAY ", dataArray);
 
     if(dataArray.length ===1){
-        $("#product-list").hide();
-        $(".graphs").hide();
+        $("#middle").children().hide();
         $("#product_view").show();
+        $("#back-button").show();
         drawProductView(dataArray);
     }
 }
@@ -84,20 +81,20 @@ function setDonutVisualization(){
     console.log(dataArray);
 
     if(dataArray.length === 2){
-        $("#product-list").hide();
-        $(".graphs").hide();
+        $("#middle").children().hide();
 
         $("#donuts >div").remove();
         $("#donuts").show();
+        $("#back-button").show();
         setDonutData(dataArray);
     }
 }
 
 function setBarchartVisualization(){
     if(selectedProducts.length > 2){
-        $("#product-list").hide();
-        $("#product_view").hide();
+        $("#middle").children().hide();
         $(".graphs").show();
+        $("#back-button").show();
 
         setBarChartData(selectedProducts);
         setHeatmapData(selectedProducts);
@@ -125,18 +122,7 @@ function setProductViewVisualization(){
 
 function setProductsList(list) {
     prodList = $.extend(true, {}, list);
-    $("#middle").append("<div id='product-list'></div>");
-    let $productView = $("#product-list");
-    $productView.html("");
-    $productView.append(
-        '<div style="text-align:center; margin-bottom:20px;">'+
-        '<h2>Select products you are interested in by clicking on their icons.</h2>' +
-        '<button id="detailVisualizeButton" class="visualize_button disabled" onclick="setDetailVisualization()">Detail visualization</button>'+
-        '<button id="donutVisualizationButton" class="visualize_button disabled" onclick="setDonutVisualization()">Donut visualization</button>'+
-        '<button id="barchartVisualizationButton" class="visualize_button disabled" onclick="setBarchartVisualization()">Barchart visualization</button>'+
-        '</div>'+
-        '<div class="row">'
-    );
+    $("#product-list").show();
 
     // Create the container for the product images
     let $row = $(".row");
@@ -171,7 +157,6 @@ function setProductsList(list) {
             selectProduct(prodList[key]);
         });
     }
-    $row.append("</div>");
 
     Object.values(prodList)
       .filter(product => selectedProducts.some(e => e.id === product.id))
@@ -227,7 +212,7 @@ function checkButtonAvailability(){
     console.log(count);
 
     if(count < 1){
-        $('.visualize_button').addClass('disabled');
+        $('#product-list').find('.visualize_button').addClass('disabled');
     }
     if(count === 1){
         $('#detailVisualizeButton').removeClass('disabled');
@@ -244,4 +229,9 @@ function checkButtonAvailability(){
         $('#donutVisualizationButton').addClass('disabled');
         $('#barchartVisualizationButton').removeClass('disabled');
     }
+}
+
+function showProductList() {
+    $("#middle").children().hide();
+    $("#product-list").show();
 }
