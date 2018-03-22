@@ -34,6 +34,10 @@ function search() {
 
             $("#middle").children().hide();
             $("#product-list").show().find(".row").empty();
+
+            result = result.filter(res => {
+              return selectedIngredients.some(ing => {return res[ing] > 0;})
+            });
             setProductsBrowserData(result);
             setProductsList(result);
         }
