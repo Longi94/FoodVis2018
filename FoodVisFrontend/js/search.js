@@ -36,6 +36,11 @@ function search() {
             $(".graphs").hide();
             $("#product_view").hide();
             $("#donuts").hide();
+
+            result = result.filter(res => {
+              return selectedIngredients.some(ing => {return res[ing] > 0;})
+            });
+
             setProductsBrowserData(result);
             setProductsList(result);
         }
