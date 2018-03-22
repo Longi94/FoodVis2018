@@ -13,19 +13,25 @@ module.exports = function(Product) {
 
 		// ---- WHERE ----
 
-		var queryObj = {};
+		var queryObj = {or:[]};
 		if(reqQueryObj.product_name) {
-			var pattern = new RegExp('.*'+reqQueryObj.product_name+'.*', "i");
-			queryObj.product_name = {
-				like: pattern
+			var pattern = new RegExp('.*'+reqQueryObj.product_name, "i");
+			var product_name = {
+				product_name: {
+					like: pattern
+				}
 			};
+			queryObj.or.push(product_name);
 		}
 
 		if(reqQueryObj.category) {
 			var pattern = new RegExp('.*'+reqQueryObj.category+'.*', "i");
-			queryObj.categories_tags = {
-				like: pattern
+			var categories_tags = {
+				categories_tags: {
+					like: pattern
+				}
 			};
+			queryObj.or.push(categories_tags);
 		}
 
 		if(reqQueryObj.ingredients) {
@@ -66,12 +72,12 @@ module.exports = function(Product) {
 
 
 		console.log('filterObj: ');
-		console.log(filterObj);
+		console.log(filterObj.where);
 		ProductsCollection.find(filterObj, function (err, data) {
 		    if (err) {
 		        return console.log(err);
 		    } else {
-				console.log(data);
+				// console.log(data);
 		    	callback(null, data);
 		    }
 		});
