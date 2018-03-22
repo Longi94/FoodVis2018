@@ -13,6 +13,7 @@
 	height: 100%;
 	background-color: rgb(191, 161, 63);
 	color: white;
+	cursor: pointer;
 }
 
 #productsCartBody {
@@ -33,6 +34,10 @@
 	border-color: rgba(255, 255, 255, 0.5);
 }
 
+.cartBox:hover, .selectedProduct_cart:hover {
+	background-color: rgb(178, 164, 119) !important;
+}
+
 .categoryBox {
 	padding: 3px;
 	width: 100%;
@@ -42,6 +47,7 @@
 	border-color: rgb(62, 62, 71);
 	color: white;
 	font-size: 13px !important;
+	cursor: pointer;
 }
 
 
