@@ -4,11 +4,28 @@ categoryMap = {};
 productList = [];
 let selectedProducts = [];
 
+d3.select('#products-cart')
+		.append('div')
+		.attr('id','cart_box')
+		.append('div')
+		.attr('onclick','toggleCart()')
+		.attr('class','cartBox')
+		.attr('id', 'productsCartHead')
+		.append('p')
+		.text('SELECTED PRODUCTS [ '+selectedProducts.length+' ]');
+
+d3.select('#cart_box')
+	.append('div')
+	.attr('hidden', true)
+	.attr('id', 'productsCartBody');
+
 function setProductsBrowserData(products) {
 	d3.select('#products-browser_list').selectAll("*").remove();
 	productList = products;
 	uniqueCats = getCategories(products);
 	categoryMap = groupProductsByCategory(uniqueCats, productList);
+
+	
 
 	Object.keys(categoryMap).forEach(function(key,index) {
 		d3.select('#products-browser_list')
@@ -61,6 +78,23 @@ function refreshData() {
 	});
 	var colorScale = d3.scaleLinear().domain([0,highestCount]).range([50,230]);
 
+	d3.select('#productsCartHead')
+			.select('p')
+			.text('SELECTED PRODUCTS [ '+selectedProducts.length+' ]');
+
+	d3.selectAll('.selectedProduct_cart').remove();
+	for(prd in selectedProducts) {
+		d3.select('#productsCartBody')
+			.append('div')
+			.attr('class','selectedProduct_cart')
+			.append('p')
+			.text(selectedProducts[prd].product_name)
+			.attr('product_id', selectedProducts[prd].id)
+			.append('button')
+			.attr('class','removeProductFromCart_button')
+			.text('X')
+	    	.attr('onclick','removeProductFromCart(this.parentNode.attributes.product_id.nodeValue)');
+	}
 
 	Object.keys(categoryMap).forEach(function(key,index) {
 
@@ -155,9 +189,21 @@ function toggleCategory(element) {
 	$('#' + element.id).toggleClass('selected');
 }
 
+function toggleCart() {
+	$('#productsCartBody').slideToggle();
+}
+
 function selectProductFromBar(productId) {
 	var p = productList.filter(x => x.id === productId);
-	toggleProductSelectionBrowser(productId);
+	// toggleProductSelectionBrowser(productId);
+	selectProduct(p[0]);
+	setBarChartData(selectedProducts);
+    setHeatmapData(selectedProducts);
+}
+
+function removeProductFromCart(productId) {
+	var p = selectedProducts.filter(x => x.id === productId);
+	// toggleProductSelectionBrowser(productId);
 	selectProduct(p[0]);
 	setBarChartData(selectedProducts);
     setHeatmapData(selectedProducts);
