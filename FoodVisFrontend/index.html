@@ -69,7 +69,7 @@
 
             </div>
             <div id="product-list" style="display: none;">
-                <div style="text-align:center; margin-bottom:20px;">
+                <div style="text-align:center;">
                     <h2>Select products you are interested in by clicking on their icons.</h2>
                     <button id="detailVisualizeButton" class="visualize_button disabled"
                             onclick="setDetailVisualization()">Detail visualization
@@ -80,6 +80,10 @@
                     <button id="barchartVisualizationButton" class="visualize_button disabled"
                             onclick="setBarchartVisualization()">Barchart visualization
                     </button>
+                </div>
+                <div style="text-align:center; margin-bottom:20px;">
+                    <button class="visualize_button" onclick="selectAll()">Select All</button>
+                    <button class="visualize_button" onclick="selectNone()">Select None</button>
                 </div>
                 <div class="row">
 

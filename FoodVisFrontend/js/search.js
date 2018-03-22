@@ -167,7 +167,7 @@ function setProductsList(list) {
 
 function selectProduct(product){
     let index = selectedProducts
-      .findIndex(d => d.id == product.id);
+      .findIndex(d => d.id === product.id);
     if(index === -1) {
         selectedProducts.push(product);
     } else {
@@ -178,6 +178,29 @@ function selectProduct(product){
 
     // function from products-browser (left bar):
     toggleProductSelectionBrowser(product.id);
+}
+
+function selectAll() {
+    productList.forEach(product => {
+        let index = selectedProducts.findIndex(d => d.id === product.id);
+        if(index === -1) {
+            selectedProducts.push(product);
+            toggleCategory(product);
+            toggleProductSelectionBrowser(product.id);
+        }
+    });
+    checkButtonAvailability();
+    refreshData();
+}
+
+function selectNone() {
+    selectedProducts.forEach(product => {
+        toggleCategory(product);
+        toggleProductSelectionBrowser(product.id);
+    });
+    selectedProducts = [];
+    checkButtonAvailability();
+    refreshData();
 }
 
 function getFilterValues() {
@@ -210,7 +233,7 @@ function checkButtonAvailability(){
     console.log(count);
 
     if(count < 1){
-        $('#product-list').find('.visualize_button').addClass('disabled');
+        $('#product-list').find('div:first-child .visualize_button').addClass('disabled');
     }
     if(count === 1){
         $('#detailVisualizeButton').removeClass('disabled');
