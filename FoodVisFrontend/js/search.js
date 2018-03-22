@@ -91,7 +91,7 @@ function setDonutVisualization(){
 }
 
 function setBarchartVisualization(){
-    if(selectedProducts.length > 2){
+    if(selectedProducts.length >= 2){
         $("#middle").children().hide();
         $(".graphs").show();
         $("#back-button").show();
@@ -183,23 +183,24 @@ function selectProduct(product){
 }
 
 function selectAll() {
-    productList.forEach(product => {
-        let index = selectedProducts.findIndex(d => d.id === product.id);
-        if(index === -1) {
-            selectedProducts.push(product);
-            toggleCategory(product);
-            toggleProductSelectionBrowser(product.id);
-        }
+    selectedProducts = productList.slice();
+    productList.forEach(product => product.selected = true);
+    Object.keys(categoryMap).forEach(key => {
+        categoryMap[key].selectedCount = categoryMap[key].products.length;
     });
+
+    $(".product").addClass("selected");
     checkButtonAvailability();
     refreshData();
 }
 
 function selectNone() {
-    selectedProducts.forEach(product => {
-        toggleCategory(product);
-        toggleProductSelectionBrowser(product.id);
+    productList.forEach(product => product.selected = false);
+    Object.keys(categoryMap).forEach(key => {
+        categoryMap[key].selectedCount = 0;
     });
+
+    $(".product").removeClass("selected");
     selectedProducts = [];
     checkButtonAvailability();
     refreshData();
